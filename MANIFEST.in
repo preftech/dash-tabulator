@@ -1,0 +1,7 @@
+include dash_tabulator/dash_tabulator.min.js
+include dash_tabulator/dash_tabulator.min.js.map
+include dash_tabulator/metadata.json
+include dash_tabulator/package-info.json
+include README.md
+include LICENSE
+include package.json
