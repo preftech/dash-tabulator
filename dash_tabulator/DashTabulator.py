@@ -13,10 +13,10 @@ which is editable by the user.
 
 Keyword arguments:
 - id (string; optional): The ID used to identify this component in Dash callbacks.
-- label (string; required): A label that will be printed when this component is rendered.
-- value (string; optional): The value displayed in the input."""
+- columns (list; optional): A label that will be printed when this component is rendered.
+- data (list; optional): The value displayed in the input."""
     @_explicitize_args
-    def __init__(self, id=Component.UNDEFINED, label=Component.REQUIRED, value=Component.UNDEFINED, **kwargs):
+    def __init__(self, id=Component.UNDEFINED, columns=Component.UNDEFINED, data=Component.UNDEFINED, **kwargs):
         self._prop_names = ['id', 'columns', 'data']
         self._type = 'DashTabulator'
         self._namespace = 'dash_tabulator'
@@ -29,7 +29,7 @@ Keyword arguments:
         _locals.update(kwargs)  # For wildcard attrs
         args = {k: _locals[k] for k in _explicit_args if k != 'children'}
 
-        for k in ['label']:
+        for k in []:
             if k not in args:
                 raise TypeError(
                     'Required argument `' + k + '` was not specified.')

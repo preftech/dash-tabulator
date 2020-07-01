@@ -1,8 +1,8 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
-dashTabulator <- function(id=NULL, label=NULL, value=NULL) {
+dashTabulator <- function(id=NULL, columns=NULL, data=NULL) {
     
-    props <- list(id=id, label=label, value=value)
+    props <- list(id=id, columns=columns, data=data)
     if (length(props) > 0) {
         props <- props[!vapply(props, is.null, logical(1))]
     }
@@ -10,7 +10,7 @@ dashTabulator <- function(id=NULL, label=NULL, value=NULL) {
         props = props,
         type = 'DashTabulator',
         namespace = 'dash_tabulator',
-        propNames = c('id', 'label', 'value'),
+        propNames = c('id', 'columns', 'data'),
         package = 'dashTabulator'
         )
 

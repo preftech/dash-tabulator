@@ -10,15 +10,15 @@ ExampleComponent is an example component. It takes a property, `label`, and disp
 }
 
 \usage{
-dashTabulator(id=NULL, label=NULL, value=NULL)
+dashTabulator(id=NULL, columns=NULL, data=NULL)
 }
 
 \arguments{
 \item{id}{Character. The ID used to identify this component in Dash callbacks.}
 
-\item{label}{Character. A label that will be printed when this component is rendered.}
+\item{columns}{Unnamed list. A label that will be printed when this component is rendered.}
 
-\item{value}{Character. The value displayed in the input.}
+\item{data}{Unnamed list. The value displayed in the input.}
 }
 
 \value{named list of JSON elements corresponding to React.js properties and their values}

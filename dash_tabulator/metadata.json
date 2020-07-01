@@ -11,16 +11,16 @@
         "required": false,
         "description": "The ID used to identify this component in Dash callbacks."
       },
-      "label": {
+      "columns": {
         "type": {
-          "name": "string"
+          "name": "array"
         },
-        "required": true,
+        "required": false,
         "description": "A label that will be printed when this component is rendered."
       },
-      "value": {
+      "data": {
         "type": {
-          "name": "string"
+          "name": "array"
         },
         "required": false,
         "description": "The value displayed in the input."
