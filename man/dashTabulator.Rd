@@ -10,7 +10,7 @@ ExampleComponent is an example component. It takes a property, `label`, and disp
 }
 
 \usage{
-dashTabulator(id=NULL, columns=NULL, data=NULL)
+dashTabulator(id=NULL, columns=NULL, data=NULL, options=NULL)
 }
 
 \arguments{
@@ -19,6 +19,8 @@ dashTabulator(id=NULL, columns=NULL, data=NULL)
 \item{columns}{Unnamed list. A label that will be printed when this component is rendered.}
 
 \item{data}{Unnamed list. The value displayed in the input.}
+
+\item{options}{Named list. Tabulator Options}
 }
 
 \value{named list of JSON elements corresponding to React.js properties and their values}

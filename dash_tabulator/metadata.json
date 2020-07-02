@@ -31,6 +31,13 @@
         },
         "required": false,
         "description": "Dash-assigned callback that should be called to report property changes\nto Dash, to make them available for callbacks."
+      },
+      "options": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "Tabulator Options"
       }
     }
   }

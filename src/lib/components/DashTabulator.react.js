@@ -14,7 +14,7 @@ import { ReactTabulator } from 'react-tabulator'
  */
 export default class DashTabulator extends Component {
     render() {
-        const {id, data, setProps, columns} = this.props;
+        const {id, data, setProps, columns, options} = this.props;
 
         return (
             <ReactTabulator
@@ -22,6 +22,10 @@ export default class DashTabulator extends Component {
                 columns={columns}
                 tooltips={true}
                 layout={"fitData"}
+                options={options}
+                onChange={
+                    e => setProps({ value: e.target.value })
+                }
             />
 
             /*
@@ -70,5 +74,11 @@ DashTabulator.propTypes = {
      * Dash-assigned callback that should be called to report property changes
      * to Dash, to make them available for callbacks.
      */
-    setProps: PropTypes.func
+    setProps: PropTypes.func,
+
+    /**
+     * Tabulator Options
+     */
+
+    options: PropTypes.object
 };

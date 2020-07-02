@@ -5,7 +5,7 @@ import dash_html_components as html
 
 app = dash.Dash(__name__)
 columns = [
-                { "title": "Name", "field": "name", "width": 150 },
+                { "title": "Name", "field": "name", "width": 150, "headerFilter":True},
                 { "title": "Age", "field": "age", "hozAlign": "left", "formatter": "progress" },
                 { "title": "Favourite Color", "field": "col" },
                 { "title": "Date Of Birth", "field": "dob", "hozAlign": "center" },
@@ -18,12 +18,16 @@ data = [
                 {"id":3, "name":"Christine Lobowski", "age":"42", "col":"green", "dob":"22/05/1982"},
                 {"id":4, "name":"Brendon Philips", "age":"125", "col":"orange", "dob":"01/08/1980"},
                 {"id":5, "name":"Margret Marmajuke", "age":"16", "col":"yellow", "dob":"31/01/1999"},
+                {"id":6, "name":"Fred Savage", "age":"16", "col":"yellow", "rating":"1", "dob":"31/01/1999"},
+                {"id":6, "name":"Brie Larson", "age":"30", "col":"blue", "rating":"1", "dob":"31/01/1999"},
               ]
+options = { "groupBy": "col"}
 app.layout = html.Div([
     dash_tabulator.DashTabulator(
         id='input',
         columns=columns,
-        data=data
+        data=data,
+        options=options
     ),
     html.Div(id='output')
 ])
