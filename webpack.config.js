@@ -32,7 +32,7 @@ module.exports = (env, argv) => {
 
     const entry = overrides.entry || {main: './src/lib/index.js'};
 
-    const devtool = overrides.devtool || 'source-map';
+    const devtool =  'source-map';
 
     const externals = ('externals' in overrides) ? overrides.externals : ({
         react: 'React',

@@ -10,7 +10,8 @@ ExampleComponent is an example component. It takes a property, `label`, and disp
 }
 
 \usage{
-dashTabulator(id=NULL, columns=NULL, data=NULL, options=NULL)
+dashTabulator(id=NULL, columns=NULL, data=NULL, options=NULL,
+rowClicked=NULL)
 }
 
 \arguments{
@@ -21,6 +22,8 @@ dashTabulator(id=NULL, columns=NULL, data=NULL, options=NULL)
 \item{data}{Unnamed list. The value displayed in the input.}
 
 \item{options}{Named list. Tabulator Options}
+
+\item{rowClicked}{Named list. rowClick captures the row that was clicked on}
 }
 
 \value{named list of JSON elements corresponding to React.js properties and their values}

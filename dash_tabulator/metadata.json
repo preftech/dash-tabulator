@@ -2,7 +2,24 @@
   "src/lib/components/DashTabulator.react.js": {
     "description": "ExampleComponent is an example component.\nIt takes a property, `label`, and\ndisplays it.\nIt renders an input with the property `value`\nwhich is editable by the user.",
     "displayName": "DashTabulator",
-    "methods": [],
+    "methods": [
+      {
+        "name": "rowClick",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "e",
+            "type": null
+          },
+          {
+            "name": "row",
+            "type": null
+          }
+        ],
+        "returns": null
+      }
+    ],
     "props": {
       "id": {
         "type": {
@@ -38,6 +55,13 @@
         },
         "required": false,
         "description": "Tabulator Options"
+      },
+      "rowClicked": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "rowClick captures the row that was clicked on"
       }
     }
   }

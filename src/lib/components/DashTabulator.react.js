@@ -13,9 +13,15 @@ import { ReactTabulator } from 'react-tabulator'
  * which is editable by the user.
  */
 export default class DashTabulator extends Component {
+    
+    rowClick = (e, row) => {
+        //console.log('ref table: ', this.ref.table); // this is the Tabulator table instance
+        console.log('rowClick id: ${row.getData().id}', row, e);
+        this.props.setProps({rowClicked: row._row.data})
+    };
     render() {
-        const {id, data, setProps, columns, options} = this.props;
-
+        const {id, data, setProps, columns, options, rowClicked} = this.props;
+        
         return (
             <ReactTabulator
                 data={data}
@@ -23,31 +29,9 @@ export default class DashTabulator extends Component {
                 tooltips={true}
                 layout={"fitData"}
                 options={options}
-                onChange={
-                    e => setProps({ value: e.target.value })
-                }
-            />
+                rowClick={this.rowClick}
 
-            /*
-            <div id={id}>
-                ExampleComponent: {label}&nbsp;
-                <input
-                    value={value}
-                    onChange={
-                        
-                         * Send the new value to the parent component.
-                         * setProps is a prop that is automatically supplied
-                         * by dash's front-end ("dash-renderer").
-                         * In a Dash app, this will update the component's
-                         * props and send the data back to the Python Dash
-                         * app server if a callback uses the modified prop as
-                         * Input or State.
-                         
-                        e => setProps({ value: e.target.value })
-                    }
-                />
-            </div>
-            */
+            />
         );
     }
 }
@@ -80,5 +64,12 @@ DashTabulator.propTypes = {
      * Tabulator Options
      */
 
-    options: PropTypes.object
+    options: PropTypes.object,
+
+    
+    /**
+     * rowClick captures the row that was clicked on
+     */
+    rowClicked: PropTypes.object,
+    
 };

@@ -2,12 +2,22 @@ import dash_tabulator
 import dash
 from dash.dependencies import Input, Output
 import dash_html_components as html
+import dash_core_components as dcc
+from textwrap import dedent as d
+import json
 
 app = dash.Dash(__name__)
+styles = {
+            'pre': {
+                'border': 'thin lightgrey solid',
+                'overflowX': 'scroll'
+            }
+        }
+graph = "input"
 columns = [
                 { "title": "Name", "field": "name", "width": 150, "headerFilter":True},
                 { "title": "Age", "field": "age", "hozAlign": "left", "formatter": "progress" },
-                { "title": "Favourite Color", "field": "col" },
+                { "title": "Favourite Color", "field": "col", "headerFilter":True },
                 { "title": "Date Of Birth", "field": "dob", "hozAlign": "center" },
                 { "title": "Rating", "field": "rating", "hozAlign": "center", "formatter": "star" },
                 { "title": "Passed?", "field": "passed", "hozAlign": "center", "formatter": "tickCross" }
@@ -21,7 +31,7 @@ data = [
                 {"id":6, "name":"Fred Savage", "age":"16", "col":"yellow", "rating":"1", "dob":"31/01/1999"},
                 {"id":6, "name":"Brie Larson", "age":"30", "col":"blue", "rating":"1", "dob":"31/01/1999"},
               ]
-options = { "groupBy": "col"}
+options = { "groupBy": "col", "selectable":1}
 app.layout = html.Div([
     dash_tabulator.DashTabulator(
         id='input',
@@ -30,12 +40,14 @@ app.layout = html.Div([
         options=options
     ),
     html.Div(id='output')
+
 ])
 
 
-#@app.callback(Output('output', 'children'), [Input('input', 'data')])
-#def display_output(value):
-#    return 'You have entered {}'.format(value)
+@app.callback(Output('output', 'children'), [Input('input', 'rowClicked')])
+def display_output(value):
+    print(value)
+    return 'You have entered {}'.format(value)
 
 
 if __name__ == '__main__':

@@ -2,13 +2,13 @@
   "presets": ["@babel/preset-env", "@babel/preset-react"],
   "env": {
       "production": {
-          "plugins": ["@babel/plugin-proposal-object-rest-spread", "styled-jsx/babel"]
+          "plugins": ["transform-class-properties","@babel/plugin-proposal-object-rest-spread", "styled-jsx/babel", "@babel/plugin-syntax-class-properties" ]
       },
       "development": {
-          "plugins": ["@babel/plugin-proposal-object-rest-spread", "styled-jsx/babel"]
+          "plugins": ["transform-class-properties","@babel/plugin-proposal-object-rest-spread", "styled-jsx/babel", "@babel/plugin-syntax-class-properties"]
       },
       "test": {
-          "plugins": ["@babel/plugin-proposal-object-rest-spread", "styled-jsx/babel-test"]
+          "plugins": ["proposal-object-rest-spread", "styled-jsx/babel-test"]
       }
   }
 }
