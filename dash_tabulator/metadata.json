@@ -18,6 +18,13 @@
           }
         ],
         "returns": null
+      },
+      {
+        "name": "downloadData",
+        "docblock": null,
+        "modifiers": [],
+        "params": [],
+        "returns": null
       }
     ],
     "props": {

@@ -1,15 +1,15 @@
 {
   "name": "dash_tabulator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Dash Plotly component providing Tabulator tables",
   "repository": {
     "type": "git",
-    "url": "git://github.com/pjaol/dash-tabulator.git"
+    "url": "git://github.com/preftech/dash-tabulator.git"
   },
   "bugs": {
-    "url": "https://github.com/pjaol/dash-tabulator/issues"
+    "url": "https://github.com/preftech/dash-tabulator/issues"
   },
-  "homepage": "https://github.com/pjaol/dash-tabulator",
+  "homepage": "https://github.com/preftech/dash-tabulator",
   "main": "build/index.js",
   "scripts": {
     "start": "webpack-serve --config ./webpack.serve.config.js --open",

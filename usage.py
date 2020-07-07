@@ -6,14 +6,17 @@ import dash_core_components as dcc
 from textwrap import dedent as d
 import json
 
-app = dash.Dash(__name__)
+external_scripts = ['https://oss.sheetjs.com/sheetjs/xlsx.full.min.js']
+external_stylesheets = ['https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css']
+app = dash.Dash(__name__, external_scripts=external_scripts, external_stylesheets=external_stylesheets)
+
 styles = {
             'pre': {
                 'border': 'thin lightgrey solid',
                 'overflowX': 'scroll'
             }
         }
-graph = "input"
+
 columns = [
                 { "title": "Name", "field": "name", "width": 150, "headerFilter":True},
                 { "title": "Age", "field": "age", "hozAlign": "left", "formatter": "progress" },

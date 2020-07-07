@@ -6,32 +6,43 @@ import 'react-tabulator/lib/css/tabulator.min.css'; // theme
 import { ReactTabulator } from 'react-tabulator'
 
 /**
- * ExampleComponent is an example component.
- * It takes a property, `label`, and
- * displays it.
- * It renders an input with the property `value`
- * which is editable by the user.
+ * DashTabulator is an implementation of the React Tabulator from 
+ * https://github.com/ngduc/react-tabulator/ and https://github.com/olifolkerd/tabulator.
+ * It takes a property, `column`, and `data`
+ * displays it in tabulator.
+ * The `options` property is passed to Tabulator to perform regular options
+ * downloading as xlsx is enabled by default.
  */
 export default class DashTabulator extends Component {
-    
+    ref = null;
     rowClick = (e, row) => {
         //console.log('ref table: ', this.ref.table); // this is the Tabulator table instance
-        console.log('rowClick id: ${row.getData().id}', row, e);
+        //console.log('rowClick id: ${row.getData().id}', row, e);
         this.props.setProps({rowClicked: row._row.data})
+    };
+    downloadData = () => {
+        this.ref.table.download("xlsx", "data.xlsx");
     };
     render() {
         const {id, data, setProps, columns, options, rowClicked} = this.props;
         
+        const options2 = {...options, 
+            downloadDataFormatter: (data) => data,
+            downloadReady: (fileContents, blob) => blob
+        }
         return (
+            <div>
+            <button type="button" onClick={this.downloadData} className="btn btn-success" id="download-xlsx">Download XLSX</button>
             <ReactTabulator
+                ref={ref => (this.ref = ref)}
                 data={data}
                 columns={columns}
                 tooltips={true}
                 layout={"fitData"}
-                options={options}
+                options={options2}
                 rowClick={this.rowClick}
-
             />
+            </div>
         );
     }
 }
