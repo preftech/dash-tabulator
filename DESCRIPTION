@@ -6,8 +6,8 @@ Depends: R (>= 3.0.2)
 Imports: 
 Suggests: 
 License: MIT + file LICENSE
-URL: https://github.com/pjaol/dash-tabulator
-BugReports: https://github.com/pjaol/dash-tabulator/issues
+URL: https://github.com/preftech/dash-tabulator
+BugReports: https://github.com/preftech/dash-tabulator/issues
 Encoding: UTF-8
 LazyData: true
 KeepSource: true
