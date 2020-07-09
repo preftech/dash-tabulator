@@ -1,16 +1,19 @@
 # dash_tabulator <!-- omit in toc -->
 
-Dash tabulator is a Dash / Plotly component providing [Tabulator](http://tabulator.info/) capabilities.
-This is not a fully comprehensive implementation of Tabulator just the basics necessary to get the application working.
-Under the covers this uses [react-tabulator](https://github.com/ngduc/react-tabulator)
-
-This is built on the shoulders of the Dash Plotly team, the Tabulator team, and the React Tabulator team.
-This readme is probably longer than the code, due to the work of those individuals!
 
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Homepage](#homepage)
+
+Dash tabulator is a Dash / Plotly component providing [Tabulator](http://tabulator.info/) capabilities.
+This is not a fully comprehensive implementation of Tabulator just the basics necessary to get the application working.
+Under the covers this uses [react-tabulator](https://github.com/ngduc/react-tabulator)
+
+![Dash Tabulator](docs/dash_tabulator.gif)
+
+This is built on the shoulders of the Dash Plotly team, the Tabulator team, and the React Tabulator team.
+This readme is probably longer than the code, due to the work of those individuals!
 
 
 ## Features
