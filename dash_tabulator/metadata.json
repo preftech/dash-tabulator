@@ -1,6 +1,6 @@
 {
   "src/lib/components/DashTabulator.react.js": {
-    "description": "ExampleComponent is an example component.\nIt takes a property, `label`, and\ndisplays it.\nIt renders an input with the property `value`\nwhich is editable by the user.",
+    "description": "DashTabulator is an implementation of the React Tabulator from \nhttps://github.com/ngduc/react-tabulator/ and https://github.com/olifolkerd/tabulator.\nIt takes a property, `column`, and `data`\ndisplays it in tabulator.\nThe `options` property is passed to Tabulator to perform regular options\ndownloading as xlsx is enabled by default.",
     "displayName": "DashTabulator",
     "methods": [
       {
@@ -69,6 +69,13 @@
         },
         "required": false,
         "description": "rowClick captures the row that was clicked on"
+      },
+      "downloadButtonType": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "downloadButtonType"
       }
     }
   }

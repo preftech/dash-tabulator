@@ -34,18 +34,34 @@ data = [
                 {"id":6, "name":"Fred Savage", "age":"16", "col":"yellow", "rating":"1", "dob":"31/01/1999"},
                 {"id":6, "name":"Brie Larson", "age":"30", "col":"blue", "rating":"1", "dob":"31/01/1999"},
               ]
+
 options = { "groupBy": "col", "selectable":1}
+downloadButtonType = {"css": "btn btn-primary", "text":"Export", "type":"xlsx"}
+
 app.layout = html.Div([
     dash_tabulator.DashTabulator(
         id='input',
-        columns=columns,
-        data=data,
-        options=options
+        columns=[],
+        data=[],
+        options=options,
+        downloadButtonType=downloadButtonType,
     ),
-    html.Div(id='output')
+    html.Div(id='output'),
+    dcc.Interval(
+                id='interval-component-iu',
+                interval=1*10, # in milliseconds
+                n_intervals=0,
+                max_intervals=0
+            )
 
 ])
 
+@app.callback([ Output('input', 'columns'), 
+                Output('input', 'data')],
+                [Input('interval-component-iu', 'n_intervals')]) 
+def initialize(val):
+
+    return columns, data
 
 @app.callback(Output('output', 'children'), [Input('input', 'rowClicked')])
 def display_output(value):

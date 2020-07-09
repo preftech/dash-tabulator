@@ -21,18 +21,27 @@ export default class DashTabulator extends Component {
         this.props.setProps({rowClicked: row._row.data})
     };
     downloadData = () => {
-        this.ref.table.download("xlsx", "data.xlsx");
+        let type = this.props.downloadButtonType.type || "csv";
+        let filename = this.props.downloadButtonType.filename || "data";
+        filename += `.${type}`
+        this.ref.table.download(type, filename);
     };
+
     render() {
-        const {id, data, setProps, columns, options, rowClicked} = this.props;
+        const {id, data, setProps, columns, options, rowClicked, downloadButtonType} = this.props;
         
         const options2 = {...options, 
             downloadDataFormatter: (data) => data,
             downloadReady: (fileContents, blob) => blob
         }
+        let downloadButton;
+        if (downloadButtonType) {
+            downloadButton = <button type="button" onClick={this.downloadData} className={downloadButtonType.css} id="download">{downloadButtonType.text}</button>
+        }
+        //<button type="button" onClick={this.downloadData} className="btn btn-success" id="download-xlsx">Download XLSX</button>
         return (
             <div>
-            <button type="button" onClick={this.downloadData} className="btn btn-success" id="download-xlsx">Download XLSX</button>
+                {downloadButton}
             <ReactTabulator
                 ref={ref => (this.ref = ref)}
                 data={data}
@@ -82,5 +91,9 @@ DashTabulator.propTypes = {
      * rowClick captures the row that was clicked on
      */
     rowClicked: PropTypes.object,
-    
+
+    /**
+     * downloadButtonType
+     */
+    downloadButtonType: PropTypes.object,
 };

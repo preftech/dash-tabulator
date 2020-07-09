@@ -5,25 +5,27 @@ from dash.development.base_component import Component, _explicitize_args
 
 class DashTabulator(Component):
     """A DashTabulator component.
-ExampleComponent is an example component.
-It takes a property, `label`, and
-displays it.
-It renders an input with the property `value`
-which is editable by the user.
+DashTabulator is an implementation of the React Tabulator from 
+https://github.com/ngduc/react-tabulator/ and https://github.com/olifolkerd/tabulator.
+It takes a property, `column`, and `data`
+displays it in tabulator.
+The `options` property is passed to Tabulator to perform regular options
+downloading as xlsx is enabled by default.
 
 Keyword arguments:
 - id (string; optional): The ID used to identify this component in Dash callbacks.
 - columns (list; optional): A label that will be printed when this component is rendered.
 - data (list; optional): The value displayed in the input.
 - options (dict; optional): Tabulator Options
-- rowClicked (dict; optional): rowClick captures the row that was clicked on"""
+- rowClicked (dict; optional): rowClick captures the row that was clicked on
+- downloadButtonType (dict; optional): downloadButtonType"""
     @_explicitize_args
-    def __init__(self, id=Component.UNDEFINED, columns=Component.UNDEFINED, data=Component.UNDEFINED, options=Component.UNDEFINED, rowClicked=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['id', 'columns', 'data', 'options', 'rowClicked']
+    def __init__(self, id=Component.UNDEFINED, columns=Component.UNDEFINED, data=Component.UNDEFINED, options=Component.UNDEFINED, rowClicked=Component.UNDEFINED, downloadButtonType=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['id', 'columns', 'data', 'options', 'rowClicked', 'downloadButtonType']
         self._type = 'DashTabulator'
         self._namespace = 'dash_tabulator'
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'columns', 'data', 'options', 'rowClicked']
+        self.available_properties = ['id', 'columns', 'data', 'options', 'rowClicked', 'downloadButtonType']
         self.available_wildcard_properties =            []
 
         _explicit_args = kwargs.pop('_explicit_args')

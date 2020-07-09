@@ -1,94 +1,154 @@
-# dash_tabulator
+# dash_tabulator <!-- omit in toc -->
 
-dash_tabulator is a Dash component library.
+Dash tabulator is a Dash / Plotly component providing [Tabulator](http://tabulator.info/) capabilities.
+This is not a fully comprehensive implementation of Tabulator just the basics necessary to get the application working.
+Under the covers this uses [react-tabulator](https://github.com/ngduc/react-tabulator)
 
-Get started with:
-1. Install Dash and its dependencies: https://dash.plotly.com/installation
-2. Run `python usage.py`
-3. Visit http://localhost:8050 in your web browser
+This is built on the shoulders of the Dash Plotly team, the Tabulator team, and the React Tabulator team.
+This readme is probably longer than the code, due to the work of those individuals!
 
-## Contributing
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Homepage](#homepage)
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md)
 
-### Install dependencies
+## Features
+* [Tabulator Column settings ](http://tabulator.info/docs/4.1/columns)
+  * Sorting / Filtering etc.
+* Data loading through [Dash Plotly callbacks](https://dash.plotly.com/basic-callbacks) 
+* Row Click Callbacks 
+* Download button to export as [csv / xlsx / pdf](http://tabulator.info/docs/4.2/download) 
+  * XLSX & PDF require 3 party js scripts, see above link for details 
 
-If you have selected install_dependencies during the prompt, you can skip this part.
+## Installation
 
-1. Install npm packages
-    ```
-    $ npm install
-    ```
-2. Create a virtual env and activate.
-    ```
-    $ virtualenv venv
-    $ . venv/bin/activate
-    ```
-    _Note: venv\Scripts\activate for windows_
+Installation can be done with pip in your dash project
+```bash
+pip install dash_tabulator
+```
 
-3. Install python packages required to build components.
-    ```
-    $ pip install -r requirements.txt
-    ```
-4. Install the python packages for testing (optional)
-    ```
-    $ pip install -r tests/requirements.txt
-    ```
+## Usage
+Sample usage 
 
-### Write your component code in `src/lib/components/DashTabulator.react.js`.
+```python
+import dash_tabulator
+import dash
+from dash.dependencies import Input, Output
+import dash_html_components as html
+import dash_core_components as dcc
+from textwrap import dedent as d
+import json
 
-- The demo app is in `src/demo` and you will import your example component code into your demo app.
-- Test your code in a Python environment:
-    1. Build your code
-        ```
-        $ npm run build
-        ```
-    2. Run and modify the `usage.py` sample dash app:
-        ```
-        $ python usage.py
-        ```
-- Write tests for your component.
-    - A sample test is available in `tests/test_usage.py`, it will load `usage.py` and you can then automate interactions with selenium.
-    - Run the tests with `$ pytest tests`.
-    - The Dash team uses these types of integration tests extensively. Browse the Dash component code on GitHub for more examples of testing (e.g. https://github.com/plotly/dash-core-components)
-- Add custom styles to your component by putting your custom CSS files into your distribution folder (`dash_tabulator`).
-    - Make sure that they are referenced in `MANIFEST.in` so that they get properly included when you're ready to publish your component.
-    - Make sure the stylesheets are added to the `_css_dist` dict in `dash_tabulator/__init__.py` so dash will serve them automatically when the component suite is requested.
-- [Review your code](./review_checklist.md)
+# 3rd party js to export as xlsx
+external_scripts = ['https://oss.sheetjs.com/sheetjs/xlsx.full.min.js']
 
-### Create a production build and publish:
+# bootstrap css
+external_stylesheets = ['https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css']
 
-1. Build your code:
-    ```
-    $ npm run build
-    ```
-2. Create a Python tarball
-    ```
-    $ python setup.py sdist
-    ```
-    This distribution tarball will get generated in the `dist/` folder
+# initialize your dash app as normal
+app = dash.Dash(__name__, external_scripts=external_scripts, external_stylesheets=external_stylesheets)
 
-3. Test your tarball by copying it into a new environment and installing it locally:
-    ```
-    $ pip install dash_tabulator-0.0.1.tar.gz
-    ```
+styles = {
+            'pre': {
+                'border': 'thin lightgrey solid',
+                'overflowX': 'scroll'
+            }
+        }
 
-4. If it works, then you can publish the component to NPM and PyPI:
-    1. Publish on PyPI
-        ```
-        $ twine upload dist/*
-        ```
-    2. Cleanup the dist folder (optional)
-        ```
-        $ rm -rf dist
-        ```
-    3. Publish on NPM (Optional if chosen False in `publish_on_npm`)
-        ```
-        $ npm publish
-        ```
-        _Publishing your component to NPM will make the JavaScript bundles available on the unpkg CDN. By default, Dash serves the component library's CSS and JS locally, but if you choose to publish the package to NPM you can set `serve_locally` to `False` and you may see faster load times._
+# Setup some columns 
+# This is the same as if you were using tabulator directly in js 
+columns = [
+                { "title": "Name", "field": "name", "width": 150, "headerFilter":True},
+                { "title": "Age", "field": "age", "hozAlign": "left", "formatter": "progress" },
+                { "title": "Favourite Color", "field": "col", "headerFilter":True },
+                { "title": "Date Of Birth", "field": "dob", "hozAlign": "center" },
+                { "title": "Rating", "field": "rating", "hozAlign": "center", "formatter": "star" },
+                { "title": "Passed?", "field": "passed", "hozAlign": "center", "formatter": "tickCross" }
+              ]
 
-5. Share your component with the community! https://community.plotly.com/c/dash
-    1. Publish this repository to GitHub
-    2. Tag your GitHub repository with the plotly-dash tag so that it appears here: https://github.com/topics/plotly-dash
-    3. Create a post in the Dash community forum: https://community.plotly.com/c/dash
+# Setup some data
+data = [
+                {"id":1, "name":"Oli Bob", "age":"12", "col":"red", "dob":""},
+                {"id":2, "name":"Mary May", "age":"1", "col":"blue", "dob":"14/05/1982"},
+                {"id":3, "name":"Christine Lobowski", "age":"42", "col":"green", "dob":"22/05/1982"},
+                {"id":4, "name":"Brendon Philips", "age":"125", "col":"orange", "dob":"01/08/1980"},
+                {"id":5, "name":"Margret Marmajuke", "age":"16", "col":"yellow", "dob":"31/01/1999"},
+                {"id":6, "name":"Fred Savage", "age":"16", "col":"yellow", "rating":"1", "dob":"31/01/1999"},
+                {"id":6, "name":"Brie Larson", "age":"30", "col":"blue", "rating":"1", "dob":"31/01/1999"},
+              ]
+
+# Additional options can be setup here 
+# these are passed directly to tabulator
+# In this example we are enabling selection
+# Allowing you to select only 1 row
+# and grouping by the col (color) column 
+
+options = { "groupBy": "col", "selectable":1}
+
+# downloadButtonType
+# takes 
+#       css     => class names
+#       text    => Text on the button
+#       type    => type of download (csv/ xlsx / pdf, remember to include appropriate 3rd party js libraries)
+#       filename => filename prefix defaults to data, will download as filename.type
+
+downloadButtonType = {"css": "btn btn-primary", "text":"Export", "type":"xlsx"}
+
+
+# Add a dash_tabulator table
+# add empty columns and data arrays to setup the react props
+# columns=[],
+# data=[], 
+# not doing will give you ugly recursive errors
+# and nothing will work
+
+app.layout = html.Div([
+    dash_tabulator.DashTabulator(
+        id='tabulator',
+        columns=[],
+        data=[],
+        options=options,
+        downloadButtonType=downloadButtonType,
+    ),
+    html.Div(id='output'),
+    dcc.Interval(
+                id='interval-component-iu',
+                interval=1*10, # in milliseconds
+                n_intervals=0,
+                max_intervals=0
+            )
+
+])
+
+
+# dash_tabulator can be populated from a dash callback
+@app.callback([ Output('tabulator', 'columns'), 
+                Output('tabulator', 'data')],
+                [Input('interval-component-iu', 'n_intervals')]) 
+def initialize(val):
+    return columns, data
+
+# dash_tabulator can register a callback on rowClicked 
+# to receive a dict of the row values
+@app.callback(Output('output', 'children'), [Input('tabulator', 'rowClicked')])
+def display_output(value):
+    print(value)
+    return 'You have entered {}'.format(value)
+
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
+
+```
+
+## Homepage 
+
+* https://github.com/preftech/dash-tabulator
+
+
+
+
+
+
+
