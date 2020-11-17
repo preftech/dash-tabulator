@@ -144,18 +144,26 @@ app.layout = html.Div([
 def initialize(val):
     return columns, data
 
-# dash_tabulator can register a callback on rowClicked, cellEdited, dataChanged
+# dash_tabulator can register a callback on rowClicked, 
+#   cellEdited => a cell with a header that has "editor":"input" etc.. will be returned with row, initial value, old value, new value
+# dataChanged => full table upon change (use with caution)
+# dataFiltering => header filters as typed, before filtering has occurred (you get partial matching)
+# dataFiltered => header filters and rows of data returned
 # to receive a dict of the row values
 @app.callback(Output('output', 'children'), 
-    [   Input('input', 'rowClicked'),
-        Input('input', 'cellEdited'),
-        Input('input', 'dataChanged')])
-def display_output(row, cell, dataChanged):
+    [Input('input', 'rowClicked'),
+    Input('input', 'cellEdited'),
+    Input('input', 'dataChanged'), 
+    Input('input', 'dataFiltering'),
+    Input('input', 'dataFiltered')])
+def display_output(row, cell, dataChanged, filters, dataFiltered):
     print(row)
     print(cell)
     print(dataChanged)
-    
+    print(filters)
+    print(dataFiltered)
     return 'You have clicked row {} ; cell {}'.format(row, cell)
+
 
 
 
@@ -167,7 +175,17 @@ if __name__ == '__main__':
 Be aware registering a callback for dataChanged will send the entire table back each time a change occurs
 Make sure you are conscious of the amount of data you are round tripping. 
 
+dataFiltering will return the filters before a match has occurred, usually a partial match
+```python
+[{'field': 'col', 'type': 'like', 'value': 'yello'}]
+```
 
+dataFiltered will return the header filter and the row data e.g.
+```python
+{
+    'filters': [{'field': 'col', 'type': 'like', 'value': 'yellow'}], 
+    'rows': [None, None, {'id': 5, 'name': 'Margret Marmajuke', 'age': '16', 'col': 'yellow', 'dob': '31/01/1999'}, {'id': 6, 'name': 'Fred Savage', 'age': '16', 'col': 'yellow', 'rating': '1', 'dob': '31/01/1999'}]}
+```
 
 ## Homepage 
 

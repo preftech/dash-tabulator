@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { array } from 'prop-types';
 
 import 'react-tabulator/lib/styles.css'; // required styles
 import 'react-tabulator/lib/css/tabulator.min.css'; // theme
@@ -14,7 +14,11 @@ import { ReactTabulator } from 'react-tabulator'
  * downloading as xlsx is enabled by default.
  */
 export default class DashTabulator extends Component {
-    ref = null;
+    constructor(props) {
+        super(props);
+        this.ref = null;
+    }
+    
     rowClick = (e, row) => {
         //console.log('ref table: ', this.ref.table); // this is the Tabulator table instance
         //console.log('rowClick id: ${row.getData().id}', row, e);
@@ -34,8 +38,7 @@ export default class DashTabulator extends Component {
 
     render() {
         const {id, data, setProps, columns, options, rowClicked, cellEdited, dataChanged, 
-            downloadButtonType,
-            clearFilterButtonType} = this.props;
+            downloadButtonType, clearFilterButtonType, initialHeaderFilter, dataFiltering, dataFiltered} = this.props;
         
         const options2 = {...options, 
             downloadDataFormatter: (data) => data,
@@ -74,6 +77,38 @@ export default class DashTabulator extends Component {
                 dataChanged={(newData) => {
                     this.props.setProps({dataChanged: newData})
                 }}
+                dataFiltering={(filters) => {
+                    //this.props.setProps({dataFiltering: this.getHeaderFilters()})
+                    var filterHeaders = new Array()
+                    if (this.ref) {
+                        filterHeaders =this.ref.table.getHeaderFilters() 
+                    }
+                    this.props.setProps({dataFiltering:filterHeaders})
+                    
+                }}
+                dataFiltered={(filters, rows) => {
+                    let rowData = new Array(rows.length)
+                    rows.forEach(r => rowData.push(r.getData()))
+                    var filterHeaders = new Array()
+                    if (this.ref) {
+                        filterHeaders =this.ref.table.getHeaderFilters() 
+                        //console.log(this.ref.table.getHeaderFilters())
+                        
+                    }
+                    console.log(this.ref)
+                    this.props.setProps(
+                                        {
+                                            dataFiltered: {
+                                                            filters: filterHeaders,
+                                                            rows: rowData
+                                                        }
+                                        }
+                                        )
+                                    }
+                                }
+
+                initialHeaderFilter={initialHeaderFilter}
+
             />
             </div>
         );
@@ -139,6 +174,23 @@ DashTabulator.propTypes = {
      * e.g.
      *  clearFilterButtonType = {"css": "btn btn-primary", "text":"Export"}
      */
-    clearFilterButtonType: PropTypes.object
+    clearFilterButtonType: PropTypes.object,
 
+    /**
+     * initialHeaderFilter based on http://tabulator.info/docs/4.8/filter#header
+     * can take array of filters 
+     */
+    initialHeaderFilter: PropTypes.array, 
+
+    /**
+     * dataFiltering based on http://tabulator.info/docs/4.8/callbacks#filter
+     * The dataFiltering callback is triggered whenever a filter event occurs, before the filter happens.
+     */
+    dataFiltering: PropTypes.array ,
+
+    /**
+     * dataFiltered based on http://tabulator.info/docs/4.8/callbacks#filter
+     * The dataFiltered callback is triggered after the table dataset is filtered
+     */
+    dataFiltered: PropTypes.object
 };

@@ -25,14 +25,20 @@ e.g.
  downloadButtonType = {"css": "btn btn-primary", "text":"Export", "type":"xlsx"}
 - clearFilterButtonType (dict; optional): clearFilterButtonType, takes a css style, text to display on button
 e.g.
- clearFilterButtonType = {"css": "btn btn-primary", "text":"Export"}"""
+ clearFilterButtonType = {"css": "btn btn-primary", "text":"Export"}
+- initialHeaderFilter (list; optional): initialHeaderFilter based on http://tabulator.info/docs/4.8/filter#header
+can take array of filters
+- dataFiltering (list; optional): dataFiltering based on http://tabulator.info/docs/4.8/callbacks#filter
+The dataFiltering callback is triggered whenever a filter event occurs, before the filter happens.
+- dataFiltered (dict; optional): dataFiltered based on http://tabulator.info/docs/4.8/callbacks#filter
+The dataFiltered callback is triggered after the table dataset is filtered"""
     @_explicitize_args
-    def __init__(self, id=Component.UNDEFINED, columns=Component.UNDEFINED, data=Component.UNDEFINED, options=Component.UNDEFINED, rowClicked=Component.UNDEFINED, cellEdited=Component.UNDEFINED, dataChanged=Component.UNDEFINED, downloadButtonType=Component.UNDEFINED, clearFilterButtonType=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['id', 'columns', 'data', 'options', 'rowClicked', 'cellEdited', 'dataChanged', 'downloadButtonType', 'clearFilterButtonType']
+    def __init__(self, id=Component.UNDEFINED, columns=Component.UNDEFINED, data=Component.UNDEFINED, options=Component.UNDEFINED, rowClicked=Component.UNDEFINED, cellEdited=Component.UNDEFINED, dataChanged=Component.UNDEFINED, downloadButtonType=Component.UNDEFINED, clearFilterButtonType=Component.UNDEFINED, initialHeaderFilter=Component.UNDEFINED, dataFiltering=Component.UNDEFINED, dataFiltered=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['id', 'columns', 'data', 'options', 'rowClicked', 'cellEdited', 'dataChanged', 'downloadButtonType', 'clearFilterButtonType', 'initialHeaderFilter', 'dataFiltering', 'dataFiltered']
         self._type = 'DashTabulator'
         self._namespace = 'dash_tabulator'
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'columns', 'data', 'options', 'rowClicked', 'cellEdited', 'dataChanged', 'downloadButtonType', 'clearFilterButtonType']
+        self.available_properties = ['id', 'columns', 'data', 'options', 'rowClicked', 'cellEdited', 'dataChanged', 'downloadButtonType', 'clearFilterButtonType', 'initialHeaderFilter', 'dataFiltering', 'dataFiltered']
         self.available_wildcard_properties =            []
 
         _explicit_args = kwargs.pop('_explicit_args')

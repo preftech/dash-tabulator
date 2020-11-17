@@ -104,6 +104,27 @@
         },
         "required": false,
         "description": "clearFilterButtonType, takes a css style, text to display on button\ne.g.\n clearFilterButtonType = {\"css\": \"btn btn-primary\", \"text\":\"Export\"}"
+      },
+      "initialHeaderFilter": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "initialHeaderFilter based on http://tabulator.info/docs/4.8/filter#header\ncan take array of filters"
+      },
+      "dataFiltering": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "dataFiltering based on http://tabulator.info/docs/4.8/callbacks#filter\nThe dataFiltering callback is triggered whenever a filter event occurs, before the filter happens."
+      },
+      "dataFiltered": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "dataFiltered based on http://tabulator.info/docs/4.8/callbacks#filter\nThe dataFiltered callback is triggered after the table dataset is filtered"
       }
     }
   }

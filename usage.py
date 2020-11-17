@@ -38,6 +38,7 @@ data = [
 options = { "groupBy": "col", "selectable":1}
 downloadButtonType = {"css": "btn btn-primary", "text":"Export", "type":"xlsx"}
 clearFilterButtonType = {"css": "btn btn-outline-dark", "text":"Clear Filters"}
+initialHeaderFilter = [{"field":"col", "value":"blue"}]
 
 app.layout = html.Div([
     dash_tabulator.DashTabulator(
@@ -46,7 +47,8 @@ app.layout = html.Div([
         data=[],
         options=options,
         downloadButtonType=downloadButtonType,
-        clearFilterButtonType=clearFilterButtonType
+        clearFilterButtonType=clearFilterButtonType,
+        
     ),
     html.Div(id='output'),
     dcc.Interval(
@@ -59,21 +61,25 @@ app.layout = html.Div([
 ])
 
 @app.callback([ Output('input', 'columns'), 
-                Output('input', 'data')],
+                Output('input', 'data'),
+                Output('input', 'initialHeaderFilter')],
                 [Input('interval-component-iu', 'n_intervals')])
 def initialize(val):
 
-    return columns, data
+    return columns, data, initialHeaderFilter
 
 @app.callback(Output('output', 'children'), 
     [Input('input', 'rowClicked'),
     Input('input', 'cellEdited'),
-    Input('input', 'dataChanged')])
-def display_output(row, cell, dataChanged):
+    Input('input', 'dataChanged'), 
+    Input('input', 'dataFiltering'),
+    Input('input', 'dataFiltered')])
+def display_output(row, cell, dataChanged, filters, dataFiltered):
     print(row)
     print(cell)
     print(dataChanged)
-    
+    print(filters)
+    print(dataFiltered)
     return 'You have clicked row {} ; cell {}'.format(row, cell)
 
 
