@@ -111,17 +111,17 @@ clearFilterButtonType = {"css": "btn btn-outline-dark", "text":"Clear Filters"}
 
 
 # Add a dash_tabulator table
-# add empty columns and data arrays to setup the react props
-# columns=[],
-# data=[], 
-# not doing will give you ugly recursive errors
-# and nothing will work
+# columns=columns,
+# data=data,
+# Can be setup at initialization or added with a callback as shown below 
+# thank you @AnnMarieW for that fix
+
 
 app.layout = html.Div([
     dash_tabulator.DashTabulator(
         id='tabulator',
-        columns=[],
-        data=[],
+        #columns=columns,
+        #data=data,
         options=options,
         downloadButtonType=downloadButtonType,
         clearFilterButtonType=clearFilterButtonType

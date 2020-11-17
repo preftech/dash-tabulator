@@ -47,14 +47,22 @@
           "name": "array"
         },
         "required": false,
-        "description": "A label that will be printed when this component is rendered."
+        "description": "A label that will be printed when this component is rendered.",
+        "defaultValue": {
+          "value": "[]",
+          "computed": false
+        }
       },
       "data": {
         "type": {
           "name": "array"
         },
         "required": false,
-        "description": "The value displayed in the input."
+        "description": "The value displayed in the input.",
+        "defaultValue": {
+          "value": "[]",
+          "computed": false
+        }
       },
       "setProps": {
         "type": {

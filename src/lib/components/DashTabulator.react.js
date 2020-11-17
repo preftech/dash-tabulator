@@ -115,7 +115,10 @@ export default class DashTabulator extends Component {
     }
 }
 
-DashTabulator.defaultProps = {};
+DashTabulator.defaultProps = {
+    columns : [],
+    data: []
+};
 
 DashTabulator.propTypes = {
     /**
