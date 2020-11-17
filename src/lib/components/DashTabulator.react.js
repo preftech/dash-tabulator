@@ -21,10 +21,6 @@ export default class DashTabulator extends Component {
         this.props.setProps({rowClicked: row._row.data})
     };
 
-    cellEdited = (cell) => {
-        
-    };
-
     downloadData = () => {
         let type = this.props.downloadButtonType.type || "csv";
         let filename = this.props.downloadButtonType.filename || "data";
@@ -32,8 +28,14 @@ export default class DashTabulator extends Component {
         this.ref.table.download(type, filename);
     };
 
+    clearFilters = () => {
+        this.ref.table.clearFilter(true);
+    }
+
     render() {
-        const {id, data, setProps, columns, options, rowClicked, cellEdited, dataChanged, downloadButtonType} = this.props;
+        const {id, data, setProps, columns, options, rowClicked, cellEdited, dataChanged, 
+            downloadButtonType,
+            clearFilterButtonType} = this.props;
         
         const options2 = {...options, 
             downloadDataFormatter: (data) => data,
@@ -43,10 +45,15 @@ export default class DashTabulator extends Component {
         if (downloadButtonType) {
             downloadButton = <button type="button" onClick={this.downloadData} className={downloadButtonType.css} id="download">{downloadButtonType.text}</button>
         }
+        let clearFilterButton;
+        if (clearFilterButtonType) {
+            clearFilterButton = <button type="button" onClick={this.clearFilters} className={clearFilterButtonType.css} id="clearFilters">{clearFilterButtonType.text}</button>
+        }
+
         //<button type="button" onClick={this.downloadData} className="btn btn-success" id="download-xlsx">Download XLSX</button>
         return (
             <div>
-                {downloadButton}
+                {downloadButton}{clearFilterButton}
             <ReactTabulator
                 ref={ref => (this.ref = ref)}
                 data={data}
@@ -121,7 +128,17 @@ DashTabulator.propTypes = {
     
     
     /**
-     * downloadButtonType
+     * downloadButtonType, takes a css style, text to display on button, type is file type to download
+     * e.g.
+     *  downloadButtonType = {"css": "btn btn-primary", "text":"Export", "type":"xlsx"}
      */
     downloadButtonType: PropTypes.object,
+
+    /**
+     * clearFilterButtonType, takes a css style, text to display on button
+     * e.g.
+     *  clearFilterButtonType = {"css": "btn btn-primary", "text":"Export"}
+     */
+    clearFilterButtonType: PropTypes.object
+
 };

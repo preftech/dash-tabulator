@@ -20,19 +20,14 @@
         "returns": null
       },
       {
-        "name": "cellEdited",
+        "name": "downloadData",
         "docblock": null,
         "modifiers": [],
-        "params": [
-          {
-            "name": "cell",
-            "type": null
-          }
-        ],
+        "params": [],
         "returns": null
       },
       {
-        "name": "downloadData",
+        "name": "clearFilters",
         "docblock": null,
         "modifiers": [],
         "params": [],
@@ -101,7 +96,14 @@
           "name": "object"
         },
         "required": false,
-        "description": "downloadButtonType"
+        "description": "downloadButtonType, takes a css style, text to display on button, type is file type to download\ne.g.\n downloadButtonType = {\"css\": \"btn btn-primary\", \"text\":\"Export\", \"type\":\"xlsx\"}"
+      },
+      "clearFilterButtonType": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "clearFilterButtonType, takes a css style, text to display on button\ne.g.\n clearFilterButtonType = {\"css\": \"btn btn-primary\", \"text\":\"Export\"}"
       }
     }
   }

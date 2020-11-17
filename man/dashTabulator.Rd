@@ -12,7 +12,7 @@ DashTabulator is an implementation of the React Tabulator from  https://github.c
 \usage{
 dashTabulator(id=NULL, columns=NULL, data=NULL, options=NULL,
 rowClicked=NULL, cellEdited=NULL, dataChanged=NULL,
-downloadButtonType=NULL)
+downloadButtonType=NULL, clearFilterButtonType=NULL)
 }
 
 \arguments{
@@ -30,7 +30,13 @@ downloadButtonType=NULL)
 
 \item{dataChanged}{Unnamed list. dataChanged captures the cell that was clicked on}
 
-\item{downloadButtonType}{Named list. downloadButtonType}
+\item{downloadButtonType}{Named list. downloadButtonType, takes a css style, text to display on button, type is file type to download
+e.g.
+ downloadButtonType = {"css": "btn btn-primary", "text":"Export", "type":"xlsx"}}
+
+\item{clearFilterButtonType}{Named list. clearFilterButtonType, takes a css style, text to display on button
+e.g.
+ clearFilterButtonType = {"css": "btn btn-primary", "text":"Export"}}
 }
 
 \value{named list of JSON elements corresponding to React.js properties and their values}

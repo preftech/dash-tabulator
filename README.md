@@ -103,6 +103,13 @@ options = { "groupBy": "col", "selectable":1}
 downloadButtonType = {"css": "btn btn-primary", "text":"Export", "type":"xlsx"}
 
 
+# clearFilterButtonType
+# takes 
+#       css     => class names
+#       text    => Text on the button
+clearFilterButtonType = {"css": "btn btn-outline-dark", "text":"Clear Filters"}
+
+
 # Add a dash_tabulator table
 # add empty columns and data arrays to setup the react props
 # columns=[],
@@ -117,6 +124,7 @@ app.layout = html.Div([
         data=[],
         options=options,
         downloadButtonType=downloadButtonType,
+        clearFilterButtonType=clearFilterButtonType
     ),
     html.Div(id='output'),
     dcc.Interval(

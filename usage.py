@@ -37,6 +37,7 @@ data = [
 
 options = { "groupBy": "col", "selectable":1}
 downloadButtonType = {"css": "btn btn-primary", "text":"Export", "type":"xlsx"}
+clearFilterButtonType = {"css": "btn btn-outline-dark", "text":"Clear Filters"}
 
 app.layout = html.Div([
     dash_tabulator.DashTabulator(
@@ -45,6 +46,7 @@ app.layout = html.Div([
         data=[],
         options=options,
         downloadButtonType=downloadButtonType,
+        clearFilterButtonType=clearFilterButtonType
     ),
     html.Div(id='output'),
     dcc.Interval(
