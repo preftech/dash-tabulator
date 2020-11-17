@@ -18,7 +18,7 @@ styles = {
         }
 
 columns = [
-                { "title": "Name", "field": "name", "width": 150, "headerFilter":True},
+                { "title": "Name", "field": "name", "width": 150, "headerFilter":True, "editor":"input"},
                 { "title": "Age", "field": "age", "hozAlign": "left", "formatter": "progress" },
                 { "title": "Favourite Color", "field": "col", "headerFilter":True },
                 { "title": "Date Of Birth", "field": "dob", "hozAlign": "center" },
@@ -32,7 +32,7 @@ data = [
                 {"id":4, "name":"Brendon Philips", "age":"125", "col":"orange", "dob":"01/08/1980"},
                 {"id":5, "name":"Margret Marmajuke", "age":"16", "col":"yellow", "dob":"31/01/1999"},
                 {"id":6, "name":"Fred Savage", "age":"16", "col":"yellow", "rating":"1", "dob":"31/01/1999"},
-                {"id":6, "name":"Brie Larson", "age":"30", "col":"blue", "rating":"1", "dob":"31/01/1999"},
+                {"id":7, "name":"Brie Larson", "age":"30", "col":"blue", "rating":"1", "dob":"31/01/1999"},
               ]
 
 options = { "groupBy": "col", "selectable":1}
@@ -58,15 +58,21 @@ app.layout = html.Div([
 
 @app.callback([ Output('input', 'columns'), 
                 Output('input', 'data')],
-                [Input('interval-component-iu', 'n_intervals')]) 
+                [Input('interval-component-iu', 'n_intervals')])
 def initialize(val):
 
     return columns, data
 
-@app.callback(Output('output', 'children'), [Input('input', 'rowClicked')])
-def display_output(value):
-    print(value)
-    return 'You have entered {}'.format(value)
+@app.callback(Output('output', 'children'), 
+    [Input('input', 'rowClicked'),
+    Input('input', 'cellEdited'),
+    Input('input', 'dataChanged')])
+def display_output(row, cell, dataChanged):
+    print(row)
+    print(cell)
+    print(dataChanged)
+    
+    return 'You have clicked row {} ; cell {}'.format(row, cell)
 
 
 if __name__ == '__main__':

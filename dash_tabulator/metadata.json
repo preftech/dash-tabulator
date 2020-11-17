@@ -20,6 +20,18 @@
         "returns": null
       },
       {
+        "name": "cellEdited",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "cell",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
         "name": "downloadData",
         "docblock": null,
         "modifiers": [],
@@ -69,6 +81,20 @@
         },
         "required": false,
         "description": "rowClick captures the row that was clicked on"
+      },
+      "cellEdited": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "cellEdited captures the cell that was clicked on"
+      },
+      "dataChanged": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "dataChanged captures the cell that was clicked on"
       },
       "downloadButtonType": {
         "type": {

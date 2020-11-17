@@ -11,7 +11,8 @@ DashTabulator is an implementation of the React Tabulator from  https://github.c
 
 \usage{
 dashTabulator(id=NULL, columns=NULL, data=NULL, options=NULL,
-rowClicked=NULL, downloadButtonType=NULL)
+rowClicked=NULL, cellEdited=NULL, dataChanged=NULL,
+downloadButtonType=NULL)
 }
 
 \arguments{
@@ -24,6 +25,10 @@ rowClicked=NULL, downloadButtonType=NULL)
 \item{options}{Named list. Tabulator Options}
 
 \item{rowClicked}{Named list. rowClick captures the row that was clicked on}
+
+\item{cellEdited}{Named list. cellEdited captures the cell that was clicked on}
+
+\item{dataChanged}{Unnamed list. dataChanged captures the cell that was clicked on}
 
 \item{downloadButtonType}{Named list. downloadButtonType}
 }

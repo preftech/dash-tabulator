@@ -18,14 +18,16 @@ Keyword arguments:
 - data (list; optional): The value displayed in the input.
 - options (dict; optional): Tabulator Options
 - rowClicked (dict; optional): rowClick captures the row that was clicked on
+- cellEdited (dict; optional): cellEdited captures the cell that was clicked on
+- dataChanged (list; optional): dataChanged captures the cell that was clicked on
 - downloadButtonType (dict; optional): downloadButtonType"""
     @_explicitize_args
-    def __init__(self, id=Component.UNDEFINED, columns=Component.UNDEFINED, data=Component.UNDEFINED, options=Component.UNDEFINED, rowClicked=Component.UNDEFINED, downloadButtonType=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['id', 'columns', 'data', 'options', 'rowClicked', 'downloadButtonType']
+    def __init__(self, id=Component.UNDEFINED, columns=Component.UNDEFINED, data=Component.UNDEFINED, options=Component.UNDEFINED, rowClicked=Component.UNDEFINED, cellEdited=Component.UNDEFINED, dataChanged=Component.UNDEFINED, downloadButtonType=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['id', 'columns', 'data', 'options', 'rowClicked', 'cellEdited', 'dataChanged', 'downloadButtonType']
         self._type = 'DashTabulator'
         self._namespace = 'dash_tabulator'
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'columns', 'data', 'options', 'rowClicked', 'downloadButtonType']
+        self.available_properties = ['id', 'columns', 'data', 'options', 'rowClicked', 'cellEdited', 'dataChanged', 'downloadButtonType']
         self.available_wildcard_properties =            []
 
         _explicit_args = kwargs.pop('_explicit_args')
