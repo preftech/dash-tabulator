@@ -1,6 +1,6 @@
 {
   "name": "dash_tabulator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Dash Plotly component providing Tabulator tables",
   "repository": {
     "type": "git",

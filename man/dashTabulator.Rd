@@ -12,7 +12,9 @@ DashTabulator is an implementation of the React Tabulator from  https://github.c
 \usage{
 dashTabulator(id=NULL, columns=NULL, data=NULL, options=NULL,
 rowClicked=NULL, cellEdited=NULL, dataChanged=NULL,
-downloadButtonType=NULL)
+downloadButtonType=NULL, clearFilterButtonType=NULL,
+initialHeaderFilter=NULL, dataFiltering=NULL,
+dataFiltered=NULL)
 }
 
 \arguments{
@@ -30,7 +32,22 @@ downloadButtonType=NULL)
 
 \item{dataChanged}{Unnamed list. dataChanged captures the cell that was clicked on}
 
-\item{downloadButtonType}{Named list. downloadButtonType}
+\item{downloadButtonType}{Named list. downloadButtonType, takes a css style, text to display on button, type is file type to download
+e.g.
+ downloadButtonType = {"css": "btn btn-primary", "text":"Export", "type":"xlsx"}}
+
+\item{clearFilterButtonType}{Named list. clearFilterButtonType, takes a css style, text to display on button
+e.g.
+ clearFilterButtonType = {"css": "btn btn-primary", "text":"Export"}}
+
+\item{initialHeaderFilter}{Unnamed list. initialHeaderFilter based on http://tabulator.info/docs/4.8/filter#header
+can take array of filters}
+
+\item{dataFiltering}{Unnamed list. dataFiltering based on http://tabulator.info/docs/4.8/callbacks#filter
+The dataFiltering callback is triggered whenever a filter event occurs, before the filter happens.}
+
+\item{dataFiltered}{Named list. dataFiltered based on http://tabulator.info/docs/4.8/callbacks#filter
+The dataFiltered callback is triggered after the table dataset is filtered}
 }
 
 \value{named list of JSON elements corresponding to React.js properties and their values}
