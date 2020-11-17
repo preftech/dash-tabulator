@@ -21,6 +21,8 @@ This readme is probably longer than the code, due to the work of those individua
   * Sorting / Filtering etc.
 * Data loading through [Dash Plotly callbacks](https://dash.plotly.com/basic-callbacks) 
 * Row Click Callbacks 
+* Data Changed Callbacks (contains the new data table, note warning on this)
+* Cell Edit Callbacks, capture the cell that was just changed, requires setting "editor":"input" etc.. on column header
 * Download button to export as [csv / xlsx / pdf](http://tabulator.info/docs/4.2/download) 
   * XLSX & PDF require 3 party js scripts, see above link for details 
 
@@ -61,8 +63,10 @@ styles = {
 
 # Setup some columns 
 # This is the same as if you were using tabulator directly in js 
+# Notice the column with "editor": "input" - these cells can be edited
+# See tabulator editor for options http://tabulator.info/docs/4.8/edit
 columns = [
-                { "title": "Name", "field": "name", "width": 150, "headerFilter":True},
+                { "title": "Name", "field": "name", "width": 150, "headerFilter":True, "editor":"input"},
                 { "title": "Age", "field": "age", "hozAlign": "left", "formatter": "progress" },
                 { "title": "Favourite Color", "field": "col", "headerFilter":True },
                 { "title": "Date Of Birth", "field": "dob", "hozAlign": "center" },
@@ -132,18 +136,30 @@ app.layout = html.Div([
 def initialize(val):
     return columns, data
 
-# dash_tabulator can register a callback on rowClicked 
+# dash_tabulator can register a callback on rowClicked, cellEdited, dataChanged
 # to receive a dict of the row values
-@app.callback(Output('output', 'children'), [Input('tabulator', 'rowClicked')])
-def display_output(value):
-    print(value)
-    return 'You have entered {}'.format(value)
+@app.callback(Output('output', 'children'), 
+    [   Input('input', 'rowClicked'),
+        Input('input', 'cellEdited'),
+        Input('input', 'dataChanged')])
+def display_output(row, cell, dataChanged):
+    print(row)
+    print(cell)
+    print(dataChanged)
+    
+    return 'You have clicked row {} ; cell {}'.format(row, cell)
+
 
 
 if __name__ == '__main__':
     app.run_server(debug=True)
 
 ```
+
+Be aware registering a callback for dataChanged will send the entire table back each time a change occurs
+Make sure you are conscious of the amount of data you are round tripping. 
+
+
 
 ## Homepage 
 

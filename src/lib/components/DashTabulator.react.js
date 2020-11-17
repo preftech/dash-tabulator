@@ -20,6 +20,11 @@ export default class DashTabulator extends Component {
         //console.log('rowClick id: ${row.getData().id}', row, e);
         this.props.setProps({rowClicked: row._row.data})
     };
+
+    cellEdited = (cell) => {
+        
+    };
+
     downloadData = () => {
         let type = this.props.downloadButtonType.type || "csv";
         let filename = this.props.downloadButtonType.filename || "data";
@@ -28,7 +33,7 @@ export default class DashTabulator extends Component {
     };
 
     render() {
-        const {id, data, setProps, columns, options, rowClicked, downloadButtonType} = this.props;
+        const {id, data, setProps, columns, options, rowClicked, cellEdited, dataChanged, downloadButtonType} = this.props;
         
         const options2 = {...options, 
             downloadDataFormatter: (data) => data,
@@ -50,6 +55,18 @@ export default class DashTabulator extends Component {
                 layout={"fitData"}
                 options={options2}
                 rowClick={this.rowClick}
+                cellEdited={(cell) => {
+                    var edited =new Object() 
+                    edited.column = cell.getField()
+                    edited.initialValue = cell.getInitialValue()
+                    edited.oldValue = cell.getOldValue()
+                    edited.value = cell.getValue()
+                    edited.row = cell.getData()
+                    this.props.setProps({cellEdited: edited})
+                }}
+                dataChanged={(newData) => {
+                    this.props.setProps({dataChanged: newData})
+                }}
             />
             </div>
         );
@@ -92,6 +109,17 @@ DashTabulator.propTypes = {
      */
     rowClicked: PropTypes.object,
 
+    /**
+     * cellEdited captures the cell that was clicked on
+     */
+    cellEdited: PropTypes.object,
+
+    /**
+     * dataChanged captures the cell that was clicked on
+     */
+    dataChanged: PropTypes.array,
+    
+    
     /**
      * downloadButtonType
      */
