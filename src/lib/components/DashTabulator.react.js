@@ -4,6 +4,7 @@ import PropTypes, { array } from 'prop-types';
 import 'react-tabulator/lib/styles.css'; // required styles
 import 'react-tabulator/lib/css/tabulator.min.css'; // theme
 import { ReactTabulator } from 'react-tabulator'
+import {resolveProps} from 'dash-extensions'
 
 /**
  * DashTabulator is an implementation of the React Tabulator from 
@@ -37,9 +38,13 @@ export default class DashTabulator extends Component {
     }
 
     render() {
-        const {id, data, setProps, columns, options, rowClicked, cellEdited, dataChanged, 
+        const {id, data, setProps, columns, options, rowClicked, cellEdited, dataChanged,
             downloadButtonType, clearFilterButtonType, initialHeaderFilter, dataFiltering, dataFiltered} = this.props;
-        
+        // Interpret column formatters as function handles.
+        for(let i=0; i < columns.length; i++){
+            columns[i] = resolveProps(columns[i], ["formatter"])
+        }
+
         const options2 = {...options, 
             downloadDataFormatter: (data) => data,
             downloadReady: (fileContents, blob) => blob

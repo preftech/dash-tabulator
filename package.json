@@ -24,6 +24,7 @@
   "author": "patrick oleary <pjaol+dash@pjaol.com>",
   "license": "MIT",
   "dependencies": {
+    "dash-extensions": "0.0.1",
     "ramda": "^0.26.1",
     "react-tabulator": "^0.14.2",
     "set-blocking": "^2.0.0"
