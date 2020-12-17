@@ -4,6 +4,7 @@
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Javascript Cell formatting](#javascript-cell-formatting)
 - [Homepage](#homepage)
 
 Dash tabulator is a Dash / Plotly component providing [Tabulator](http://tabulator.info/) capabilities.
@@ -25,6 +26,10 @@ This readme is probably longer than the code, due to the work of those individua
 * Cell Edit Callbacks, capture the cell that was just changed, requires setting "editor":"input" etc.. on column header
 * Download button to export as [csv / xlsx / pdf](http://tabulator.info/docs/4.2/download) 
   * XLSX & PDF require 3 party js scripts, see above link for details 
+* Javascript formatters for cells
+  * Contributed by Emil Haldrup Eriksen https://github.com/emilhe
+  *  See pull request https://github.com/preftech/dash-tabulator/pull/11
+
 
 ## Installation
 
@@ -186,6 +191,32 @@ dataFiltered will return the header filter and the row data e.g.
     'filters': [{'field': 'col', 'type': 'like', 'value': 'yellow'}], 
     'rows': [None, None, {'id': 5, 'name': 'Margret Marmajuke', 'age': '16', 'col': 'yellow', 'dob': '31/01/1999'}, {'id': 6, 'name': 'Fred Savage', 'age': '16', 'col': 'yellow', 'rating': '1', 'dob': '31/01/1999'}]}
 ```
+
+
+## Javascript Cell formatting
+Contributed in https://github.com/preftech/dash-tabulator/pull/11
+Tabulator offers Javascript formatting of cells http://tabulator.info/docs/3.4?#formatting
+These will be browser side javascript methods that have to be passed in the colum dict.
+
+* Create an assets directory
+  * See https://dash.plotly.com/external-resources for customization options
+* Add a javascript file with a window.<CustomNameSpace> method
+  * An example is provided in the assets/buttons.js file
+  * Note the Namespace and the function printIcon 
+* Register that method in your python app 
+  * Using  dash_extensions.javascript.Namespace
+* Add the registered function to your colums formatter
+
+
+
+```python
+from dash_extensions.javascript import Namespace
+...
+ns = Namespace("CustomNamespace", "tabulator")
+...
+columns = [{"formatter": ns("printIcon")}, ...]
+```
+
 
 ## Homepage 
 
