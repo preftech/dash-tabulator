@@ -45,7 +45,7 @@ data = [
                 {"id":7, "name":"Brie Larson", "age":"30", "col":"blue", "rating":"1", "dob":"31/01/1999", "print" :"foo"},
               ]
 
-options = { "groupBy": "col", "selectable":1}
+options = { "groupBy": "col", "selectable":"true"}
 downloadButtonType = {"css": "btn btn-primary", "text":"Export", "type":"xlsx"}
 clearFilterButtonType = {"css": "btn btn-outline-dark", "text":"Clear Filters"}
 initialHeaderFilter = [{"field":"col", "value":"blue"}]
@@ -78,17 +78,18 @@ def initialize(val):
 
 @app.callback(Output('output', 'children'), 
     [Input('input', 'rowClicked'),
+    Input('input', 'multiRowsClicked'),
     Input('input', 'cellEdited'),
     Input('input', 'dataChanged'), 
     Input('input', 'dataFiltering'),
     Input('input', 'dataFiltered')])
-def display_output(row, cell, dataChanged, filters, dataFiltered):
+def display_output(row, multiRowsClicked, cell, dataChanged, filters, dataFiltered):
     print(row)
     print(cell)
     print(dataChanged)
     print(filters)
     print(dataFiltered)
-    return 'You have clicked row {} ; cell {}'.format(row, cell)
+    return 'You have clicked row {} ; cell {} ; multiRowsClicked {}'.format(row, cell, multiRowsClicked)
 
 
 if __name__ == '__main__':

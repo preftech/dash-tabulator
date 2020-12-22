@@ -4,6 +4,7 @@
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Multiple Row Selection](#multiple-row-selection)
 - [Javascript Cell formatting](#javascript-cell-formatting)
 - [Homepage](#homepage)
 
@@ -192,6 +193,35 @@ dataFiltered will return the header filter and the row data e.g.
     'rows': [None, None, {'id': 5, 'name': 'Margret Marmajuke', 'age': '16', 'col': 'yellow', 'dob': '31/01/1999'}, {'id': 6, 'name': 'Fred Savage', 'age': '16', 'col': 'yellow', 'rating': '1', 'dob': '31/01/1999'}]}
 ```
 
+## Multiple Row Selection
+Tabulator supports multiple row selection
+To Enable the table option selectable must be set to the STRING true
+```python
+options = { "groupBy": "col", "selectable":"true"}
+``` 
+Beware this is not the python keyword True
+For other options around selectable such as max selectable rows see
+http://tabulator.info/docs/4.0/select
+
+Once selectable is set 
+```python
+@app.callback(Output('output', 'children'), 
+    [Input('input', 'rowClicked'),
+    Input('input', 'multiRowsClicked')]
+def clickedRows(rowClicked, multiRowsClicked):
+  ......
+  ......
+```
+multiRowsClicked will now contain an array of all the rows selected
+e.g.
+```python
+ [
+    {'id': 6, 'name': 'Fred Savage', 'age': '16', 'col': 'yellow', 'rating': '1', 'dob': '31/01/1999', 'print': 'foo'}, 
+    {'id': 5, 'name': 'Margret Marmajuke', 'age': '16', 'col': 'yellow', 'dob': '31/01/1999', 'print': 'foo'}, 
+    {'id': 4, 'name': 'Brendon Philips', 'age': '125', 'col': 'orange', 'dob': '01/08/1980', 'print': 'foo'}, 
+    {'id': 3, 'name': 'Christine Lobowski', 'age': '42', 'col': 'green', 'dob': '22/05/1982', 'print': 'foo'}
+]
+```
 
 ## Javascript Cell formatting
 Contributed in https://github.com/preftech/dash-tabulator/pull/11

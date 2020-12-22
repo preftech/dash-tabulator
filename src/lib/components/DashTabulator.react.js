@@ -23,7 +23,10 @@ export default class DashTabulator extends Component {
     rowClick = (e, row) => {
         //console.log('ref table: ', this.ref.table); // this is the Tabulator table instance
         //console.log('rowClick id: ${row.getData().id}', row, e);
+        //console.log( this.ref.table.getSelectedData());
         this.props.setProps({rowClicked: row._row.data})
+        this.props.setProps({multiRowsClicked: this.ref.table.getSelectedData() })
+
     };
 
     downloadData = () => {
@@ -38,7 +41,7 @@ export default class DashTabulator extends Component {
     }
 
     render() {
-        const {id, data, setProps, columns, options, rowClicked, cellEdited, dataChanged,
+        const {id, data, setProps, columns, options, rowClicked, multiRowsClicked, cellEdited, dataChanged,
             downloadButtonType, clearFilterButtonType, initialHeaderFilter, dataFiltering, dataFiltered} = this.props;
         // Interpret column formatters as function handles.
         for(let i=0; i < columns.length; i++){
@@ -158,6 +161,11 @@ DashTabulator.propTypes = {
      * rowClick captures the row that was clicked on
      */
     rowClicked: PropTypes.object,
+
+    /**
+     * multiRowsClicked, when multiple rows are clicked
+     */
+    multiRowsClicked: PropTypes.array,
 
     /**
      * cellEdited captures the cell that was clicked on

@@ -11,10 +11,10 @@ DashTabulator is an implementation of the React Tabulator from  https://github.c
 
 \usage{
 dashTabulator(id=NULL, columns=NULL, data=NULL, options=NULL,
-rowClicked=NULL, cellEdited=NULL, dataChanged=NULL,
-downloadButtonType=NULL, clearFilterButtonType=NULL,
-initialHeaderFilter=NULL, dataFiltering=NULL,
-dataFiltered=NULL)
+rowClicked=NULL, multiRowsClicked=NULL, cellEdited=NULL,
+dataChanged=NULL, downloadButtonType=NULL,
+clearFilterButtonType=NULL, initialHeaderFilter=NULL,
+dataFiltering=NULL, dataFiltered=NULL)
 }
 
 \arguments{
@@ -27,6 +27,8 @@ dataFiltered=NULL)
 \item{options}{Named list. Tabulator Options}
 
 \item{rowClicked}{Named list. rowClick captures the row that was clicked on}
+
+\item{multiRowsClicked}{Unnamed list. multiRowsClicked, when multiple rows are clicked}
 
 \item{cellEdited}{Named list. cellEdited captures the cell that was clicked on}
 

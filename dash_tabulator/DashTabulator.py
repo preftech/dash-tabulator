@@ -18,6 +18,7 @@ Keyword arguments:
 - data (list; optional): The value displayed in the input.
 - options (dict; optional): Tabulator Options
 - rowClicked (dict; optional): rowClick captures the row that was clicked on
+- multiRowsClicked (list; optional): multiRowsClicked, when multiple rows are clicked
 - cellEdited (dict; optional): cellEdited captures the cell that was clicked on
 - dataChanged (list; optional): dataChanged captures the cell that was clicked on
 - downloadButtonType (dict; optional): downloadButtonType, takes a css style, text to display on button, type is file type to download
@@ -33,12 +34,12 @@ The dataFiltering callback is triggered whenever a filter event occurs, before t
 - dataFiltered (dict; optional): dataFiltered based on http://tabulator.info/docs/4.8/callbacks#filter
 The dataFiltered callback is triggered after the table dataset is filtered"""
     @_explicitize_args
-    def __init__(self, id=Component.UNDEFINED, columns=Component.UNDEFINED, data=Component.UNDEFINED, options=Component.UNDEFINED, rowClicked=Component.UNDEFINED, cellEdited=Component.UNDEFINED, dataChanged=Component.UNDEFINED, downloadButtonType=Component.UNDEFINED, clearFilterButtonType=Component.UNDEFINED, initialHeaderFilter=Component.UNDEFINED, dataFiltering=Component.UNDEFINED, dataFiltered=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['id', 'columns', 'data', 'options', 'rowClicked', 'cellEdited', 'dataChanged', 'downloadButtonType', 'clearFilterButtonType', 'initialHeaderFilter', 'dataFiltering', 'dataFiltered']
+    def __init__(self, id=Component.UNDEFINED, columns=Component.UNDEFINED, data=Component.UNDEFINED, options=Component.UNDEFINED, rowClicked=Component.UNDEFINED, multiRowsClicked=Component.UNDEFINED, cellEdited=Component.UNDEFINED, dataChanged=Component.UNDEFINED, downloadButtonType=Component.UNDEFINED, clearFilterButtonType=Component.UNDEFINED, initialHeaderFilter=Component.UNDEFINED, dataFiltering=Component.UNDEFINED, dataFiltered=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['id', 'columns', 'data', 'options', 'rowClicked', 'multiRowsClicked', 'cellEdited', 'dataChanged', 'downloadButtonType', 'clearFilterButtonType', 'initialHeaderFilter', 'dataFiltering', 'dataFiltered']
         self._type = 'DashTabulator'
         self._namespace = 'dash_tabulator'
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'columns', 'data', 'options', 'rowClicked', 'cellEdited', 'dataChanged', 'downloadButtonType', 'clearFilterButtonType', 'initialHeaderFilter', 'dataFiltering', 'dataFiltered']
+        self.available_properties = ['id', 'columns', 'data', 'options', 'rowClicked', 'multiRowsClicked', 'cellEdited', 'dataChanged', 'downloadButtonType', 'clearFilterButtonType', 'initialHeaderFilter', 'dataFiltering', 'dataFiltered']
         self.available_wildcard_properties =            []
 
         _explicit_args = kwargs.pop('_explicit_args')

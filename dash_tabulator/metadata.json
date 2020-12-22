@@ -85,6 +85,13 @@
         "required": false,
         "description": "rowClick captures the row that was clicked on"
       },
+      "multiRowsClicked": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "multiRowsClicked, when multiple rows are clicked"
+      },
       "cellEdited": {
         "type": {
           "name": "object"
