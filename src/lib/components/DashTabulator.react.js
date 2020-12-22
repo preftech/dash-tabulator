@@ -25,9 +25,14 @@ export default class DashTabulator extends Component {
         //console.log('rowClick id: ${row.getData().id}', row, e);
         //console.log( this.ref.table.getSelectedData());
         this.props.setProps({rowClicked: row._row.data})
-        this.props.setProps({multiRowsClicked: this.ref.table.getSelectedData() })
+        //this.props.setProps({multiRowsClicked: this.ref.table.getSelectedData() })
 
     };
+
+    rowSelected = (data, row) => {
+        this.props.setProps({multiRowsClicked: data }) 
+        return true
+    }
 
     downloadData = () => {
         let type = this.props.downloadButtonType.type || "csv";
@@ -73,6 +78,7 @@ export default class DashTabulator extends Component {
                 layout={"fitData"}
                 options={options2}
                 rowClick={this.rowClick}
+                rowSelectionChanged={this.rowSelected}
                 cellEdited={(cell) => {
                     var edited =new Object() 
                     edited.column = cell.getField()

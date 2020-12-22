@@ -20,6 +20,22 @@
         "returns": null
       },
       {
+        "name": "rowSelected",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "data",
+            "type": null
+          },
+          {
+            "name": "row",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
         "name": "downloadData",
         "docblock": null,
         "modifiers": [],

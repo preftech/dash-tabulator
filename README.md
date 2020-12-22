@@ -223,6 +223,15 @@ e.g.
 ]
 ```
 
+Multi row selection can also be performed using a header column 
+```python
+columns = [
+                {"formatter":"rowSelection", "titleFormatter":"rowSelection", "hozAlign":"center", "headerSort":"false"},
+                { "title": "Name", "field": "name", "width": 150, "headerFilter":True, "editor":"input"},
+```
+
+Multi row selection appears to create an issue with determining which cell was clicked as the entire row is highlighted, this may be a bug in Tabulator or React Tabulator.
+
 ## Javascript Cell formatting
 Contributed in https://github.com/preftech/dash-tabulator/pull/11
 Tabulator offers Javascript formatting of cells http://tabulator.info/docs/3.4?#formatting
