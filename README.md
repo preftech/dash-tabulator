@@ -157,11 +157,11 @@ def initialize(val):
 # dataFiltered => header filters and rows of data returned
 # to receive a dict of the row values
 @app.callback(Output('output', 'children'), 
-    [Input('input', 'rowClicked'),
-    Input('input', 'cellEdited'),
-    Input('input', 'dataChanged'), 
-    Input('input', 'dataFiltering'),
-    Input('input', 'dataFiltered')])
+    [Input('tabulator', 'rowClicked'),
+    Input('tabulator', 'cellEdited'),
+    Input('tabulator', 'dataChanged'), 
+    Input('tabulator', 'dataFiltering'),
+    Input('tabulator', 'dataFiltered')])
 def display_output(row, cell, dataChanged, filters, dataFiltered):
     print(row)
     print(cell)
@@ -206,8 +206,8 @@ http://tabulator.info/docs/4.0/select
 Once selectable is set 
 ```python
 @app.callback(Output('output', 'children'), 
-    [Input('input', 'rowClicked'),
-    Input('input', 'multiRowsClicked')]
+    [Input('tabulator', 'rowClicked'),
+    Input('tabulator', 'multiRowsClicked')]
 def clickedRows(rowClicked, multiRowsClicked):
   ......
   ......

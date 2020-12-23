@@ -53,7 +53,7 @@ initialHeaderFilter = [{"field":"col", "value":"blue"}]
 
 app.layout = html.Div([
     dash_tabulator.DashTabulator(
-        id='input',
+        id='tabulator',
         options=options,
         downloadButtonType=downloadButtonType,
         clearFilterButtonType=clearFilterButtonType,
@@ -69,21 +69,21 @@ app.layout = html.Div([
 
 ])
 
-@app.callback([ Output('input', 'columns'), 
-                Output('input', 'data'),
-                Output('input', 'initialHeaderFilter')],
+@app.callback([ Output('tabulator', 'columns'), 
+                Output('tabulator', 'data'),
+                Output('tabulator', 'initialHeaderFilter')],
                 [Input('interval-component-iu', 'n_intervals')])
 def initialize(val):
 
     return columns, data, initialHeaderFilter
 
 @app.callback(Output('output', 'children'), 
-    [Input('input', 'rowClicked'),
-    Input('input', 'multiRowsClicked'),
-    Input('input', 'cellEdited'),
-    Input('input', 'dataChanged'), 
-    Input('input', 'dataFiltering'),
-    Input('input', 'dataFiltered')])
+    [Input('tabulator', 'rowClicked'),
+    Input('tabulator', 'multiRowsClicked'),
+    Input('tabulator', 'cellEdited'),
+    Input('tabulator', 'dataChanged'), 
+    Input('tabulator', 'dataFiltering'),
+    Input('tabulator', 'dataFiltered')])
 def display_output(row, multiRowsClicked, cell, dataChanged, filters, dataFiltered):
     print(row)
     print(cell)
