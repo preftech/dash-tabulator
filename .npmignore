@@ -25,3 +25,5 @@ CHANGELOG.md
 README.md
 venv
 dist
+*.pyc
+__pycache__

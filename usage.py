@@ -20,9 +20,9 @@ styles = {
             }
         }
 
-# in the asset folder there is a JS method in assets/buttons.js with a window.myNamespace 
+# in the asset folder there is a JS method in assets/buttons.js with a window.myNamespace
 # declared, a reference can be passed using Namespace that then gets mapped client side
-# see https://github.com/preftech/dash-tabulator/pull/11 
+# see https://github.com/preftech/dash-tabulator/pull/11
 # The namespace here must match the name space of the JavaScript asset.
 ns = Namespace("myNamespace", "tabulator")
 
@@ -57,7 +57,6 @@ app.layout = html.Div([
         options=options,
         downloadButtonType=downloadButtonType,
         clearFilterButtonType=clearFilterButtonType,
-        
     ),
     html.Div(id='output'),
     dcc.Interval(
@@ -69,7 +68,7 @@ app.layout = html.Div([
 
 ])
 
-@app.callback([ Output('tabulator', 'columns'), 
+@app.callback([ Output('tabulator', 'columns'),
                 Output('tabulator', 'data'),
                 Output('tabulator', 'initialHeaderFilter')],
                 [Input('interval-component-iu', 'n_intervals')])
@@ -77,19 +76,19 @@ def initialize(val):
 
     return columns, data, initialHeaderFilter
 
-@app.callback(Output('output', 'children'), 
+@app.callback(Output('output', 'children'),
     [Input('tabulator', 'rowClicked'),
     Input('tabulator', 'multiRowsClicked'),
     Input('tabulator', 'cellEdited'),
-    Input('tabulator', 'dataChanged'), 
+    Input('tabulator', 'dataChanged'),
     Input('tabulator', 'dataFiltering'),
     Input('tabulator', 'dataFiltered')])
 def display_output(row, multiRowsClicked, cell, dataChanged, filters, dataFiltered):
-    print(row)
-    print(cell)
-    print(dataChanged)
-    print(filters)
-    print(dataFiltered)
+    print("row: {}".format(str(row)))
+    print("cell: {}".format(str(cell)))
+    print("data changed: {}".format(str(dataChanged)))
+    print("filters: {}".format(str(filters)))
+    print("data filtered: {}".format(str(dataFiltered)))
     return 'You have clicked row {} ; cell {} ; multiRowsClicked {}'.format(row, cell, multiRowsClicked)
 
 

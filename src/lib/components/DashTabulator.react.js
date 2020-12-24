@@ -20,18 +20,24 @@ export default class DashTabulator extends Component {
         this.ref = null;
     }
     
+    /*
+     * setProps calls render() which can break DOM updates like changing a cell to an editor 
+     *          or resetting a filter field as it's being typed, shouldRerender can be used to turn off render
+     *          as setProps is being called
+     */
+    shouldRerender = false; 
+    
     rowClick = (e, row) => {
         //console.log('ref table: ', this.ref.table); // this is the Tabulator table instance
         //console.log('rowClick id: ${row.getData().id}', row, e);
         //console.log( this.ref.table.getSelectedData());
         this.props.setProps({rowClicked: row._row.data})
-        //this.props.setProps({multiRowsClicked: this.ref.table.getSelectedData() })
-
     };
 
     rowSelected = (data, row) => {
+        this.shouldRerender = false;
         this.props.setProps({multiRowsClicked: data }) 
-        return true
+        this.shouldRerender = true;
     }
 
     downloadData = () => {
@@ -45,6 +51,10 @@ export default class DashTabulator extends Component {
         this.ref.table.clearFilter(true);
     }
 
+    shouldComponentUpdate() {
+        return this.shouldRerender;
+    }
+
     render() {
         const {id, data, setProps, columns, options, rowClicked, multiRowsClicked, cellEdited, dataChanged,
             downloadButtonType, clearFilterButtonType, initialHeaderFilter, dataFiltering, dataFiltered} = this.props;
@@ -52,7 +62,7 @@ export default class DashTabulator extends Component {
         for(let i=0; i < columns.length; i++){
             columns[i] = resolveProps(columns[i], ["formatter"])
         }
-
+        
         const options2 = {...options, 
             downloadDataFormatter: (data) => data,
             downloadReady: (fileContents, blob) => blob
@@ -66,7 +76,6 @@ export default class DashTabulator extends Component {
             clearFilterButton = <button type="button" onClick={this.clearFilters} className={clearFilterButtonType.css} id="clearFilters">{clearFilterButtonType.text}</button>
         }
 
-        //<button type="button" onClick={this.downloadData} className="btn btn-success" id="download-xlsx">Download XLSX</button>
         return (
             <div>
                 {downloadButton}{clearFilterButton}
@@ -78,8 +87,8 @@ export default class DashTabulator extends Component {
                 layout={"fitData"}
                 options={options2}
                 rowClick={this.rowClick}
-                rowSelectionChanged={this.rowSelected}
                 cellEdited={(cell) => {
+                    //console.log(cell)
                     var edited =new Object() 
                     edited.column = cell.getField()
                     edited.initialValue = cell.getInitialValue()
@@ -88,6 +97,7 @@ export default class DashTabulator extends Component {
                     edited.row = cell.getData()
                     this.props.setProps({cellEdited: edited})
                 }}
+                rowSelectionChanged={this.rowSelected}
                 dataChanged={(newData) => {
                     this.props.setProps({dataChanged: newData})
                 }}
@@ -97,8 +107,9 @@ export default class DashTabulator extends Component {
                     if (this.ref) {
                         filterHeaders =this.ref.table.getHeaderFilters() 
                     }
+                    this.shouldRerender = false;
                     this.props.setProps({dataFiltering:filterHeaders})
-                    
+                    this.shouldRerender = true;
                 }}
                 dataFiltered={(filters, rows) => {
                     let rowData = new Array(rows.length)
@@ -109,7 +120,8 @@ export default class DashTabulator extends Component {
                         //console.log(this.ref.table.getHeaderFilters())
                         
                     }
-                    console.log(this.ref)
+                    
+                    this.shouldRerender = false;
                     this.props.setProps(
                                         {
                                             dataFiltered: {
@@ -118,8 +130,9 @@ export default class DashTabulator extends Component {
                                                         }
                                         }
                                         )
-                                    }
-                                }
+                    this.shouldRerender = true;
+                    }
+                } // dataFiltered end
 
                 initialHeaderFilter={initialHeaderFilter}
 
