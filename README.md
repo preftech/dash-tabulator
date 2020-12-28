@@ -5,7 +5,9 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Multiple Row Selection](#multiple-row-selection)
-- [Javascript Cell formatting](#javascript-cell-formatting)
+- [Javascript](#javascript)
+- [Javascript Cell Formatting Example](#javascript-cell-formatting-example)
+- [Javascript column resizing capture](#javascript-column-resizing-capture)
 - [Homepage](#homepage)
 
 Dash tabulator is a Dash / Plotly component providing [Tabulator](http://tabulator.info/) capabilities.
@@ -232,22 +234,31 @@ columns = [
 
 Multi row selection appears to create an issue with determining which cell was clicked as the entire row is highlighted, this may be a bug in Tabulator or React Tabulator.
 
-## Javascript Cell formatting
+## Javascript 
+Tabulator offers a significate amount of callbacks that allow for interactivity with tables to be captured
+and modified http://tabulator.info/docs/4.8/callbacks
+To enable this functionality we can use Dash-Extensions 
+
+Create an assets folder, add a javascript file with your custom functions
+An example is provided in assets/custom_tabulator.js
+Please follow the examples below
+
+## Javascript Cell Formatting Example
 Contributed in https://github.com/preftech/dash-tabulator/pull/11
 Tabulator offers Javascript formatting of cells http://tabulator.info/docs/3.4?#formatting
-These will be browser side javascript methods that have to be passed in the colum dict.
+This a browser side javascript method attached to a header colum.
 
 * Create an assets directory
   * See https://dash.plotly.com/external-resources for customization options
 * Add a javascript file with a window.<CustomNameSpace> method
-  * An example is provided in the assets/buttons.js file
+  * An example is provided in the assets/custom_tabulator.js file
   * Note the Namespace and the function printIcon 
 * Register that method in your python app 
   * Using  dash_extensions.javascript.Namespace
 * Add the registered function to your colums formatter
 
 
-
+Python code:
 ```python
 from dash_extensions.javascript import Namespace
 ...
@@ -255,6 +266,48 @@ ns = Namespace("CustomNamespace", "tabulator")
 ...
 columns = [{"formatter": ns("printIcon")}, ...]
 ```
+
+Javascript code:
+```javascript
+window.myNamespace = Object.assign({}, window.myNamespace, {
+    tabulator: {
+        printIcon: function (cell, formatterParams, onRendered) {
+            return "<i class='fa fa-print'></i>";
+        }
+    }
+});
+```
+
+## Javascript column resizing capture
+Capturing a column resize, when a user drags a column width
+From tabulators callbacks page http://tabulator.info/docs/4.8/callbacks#column
+We see there's a columnsResized callback
+in our python code in the options dict we can specify a javascript method
+
+assets/custom_tabulator.js
+```javascript
+window.myNamespace = Object.assign({}, window.myNamespace, {
+    tabulator: {
+        columnResized : function (column) {
+            console.log("Column is resized");
+            console.log(column)
+        }
+    }
+});
+```
+
+Within your python code, you can register this method as a tabulator option
+
+```python
+from dash_extensions.javascript import Namespace
+...
+ns = Namespace("CustomNamespace", "tabulator")
+...
+options = { "groupBy": "col", "selectable":"true", "columnResized" : ns("columnResized")}
+```
+
+A full list of callbacks available exists http://tabulator.info/docs/4.8/callbacks
+
 
 
 ## Homepage 

@@ -4,7 +4,7 @@ import PropTypes, { array } from 'prop-types';
 import 'react-tabulator/lib/styles.css'; // required styles
 import 'react-tabulator/lib/css/tabulator.min.css'; // theme
 import { ReactTabulator } from 'react-tabulator'
-import {resolveProps} from 'dash-extensions'
+import {resolveProps, resolveProp} from 'dash-extensions'
 
 /**
  * DashTabulator is an implementation of the React Tabulator from 
@@ -58,15 +58,25 @@ export default class DashTabulator extends Component {
     render() {
         const {id, data, setProps, columns, options, rowClicked, multiRowsClicked, cellEdited, dataChanged,
             downloadButtonType, clearFilterButtonType, initialHeaderFilter, dataFiltering, dataFiltered} = this.props;
+        
         // Interpret column formatters as function handles.
+        // TODO: resolve any columns method
         for(let i=0; i < columns.length; i++){
             columns[i] = resolveProps(columns[i], ["formatter"])
         }
-        
+
+        // check all options for a global windows function in the assets folder
+        for (let key in options) {
+            let o = options[key] 
+            if (o instanceof Object) {
+                options[key] = resolveProp(o, this)    
+            }
+        } 
         const options2 = {...options, 
             downloadDataFormatter: (data) => data,
             downloadReady: (fileContents, blob) => blob
         }
+
         let downloadButton;
         if (downloadButtonType) {
             downloadButton = <button type="button" onClick={this.downloadData} className={downloadButtonType.css} id="download">{downloadButtonType.text}</button>
@@ -227,5 +237,83 @@ DashTabulator.propTypes = {
      * dataFiltered based on http://tabulator.info/docs/4.8/callbacks#filter
      * The dataFiltered callback is triggered after the table dataset is filtered
      */
-    dataFiltered: PropTypes.object
+    dataFiltered: PropTypes.object,
+
+
+    /**
+     * standard props not used by dash-tabulator directly
+     * can be used as part of custom javascript implementations
+     */
+    rowClick : PropTypes.any,
+    tableBuilding : PropTypes.any,
+    tableBuilt : PropTypes.any,
+    rowDblClick : PropTypes.any,
+    rowContext : PropTypes.any,
+    rowTap : PropTypes.any,
+    rowDblTap : PropTypes.any,
+    rowTapHold : PropTypes.any,
+    rowAdded : PropTypes.any,
+    rowDeleted : PropTypes.any,
+    rowMoved : PropTypes.any,
+    rowUpdated : PropTypes.any,
+    rowSelectionChanged : PropTypes.any,
+    rowSelected : PropTypes.any,
+    rowDeselected : PropTypes.any,
+    rowResized : PropTypes.any,
+    cellClick : PropTypes.any,
+    cellDblClick : PropTypes.any,
+    cellContext : PropTypes.any,
+    cellTap : PropTypes.any,
+    cellDblTap : PropTypes.any,
+    cellTapHold : PropTypes.any,
+    cellEditing : PropTypes.any,
+    cellEditCancelled : PropTypes.any,
+    columnMoved : PropTypes.any,
+    columnResized : PropTypes.any,
+    columnTitleChanged : PropTypes.any,
+    columnVisibilityChanged : PropTypes.any,
+    headerClick : PropTypes.any,
+    headerDblClick : PropTypes.any,
+    headerContext : PropTypes.any,
+    headerTap : PropTypes.any,
+    headerDblTap : PropTypes.any,
+    headerTapHold : PropTypes.any,
+    htmlImporting : PropTypes.any,
+    htmlImported : PropTypes.any,
+    dataLoading : PropTypes.any,
+    dataLoaded : PropTypes.any,
+    ajaxRequesting : PropTypes.any,
+    ajaxResponse : PropTypes.any,
+    ajaxError : PropTypes.any,
+    dataSorting : PropTypes.any,
+    dataSorted : PropTypes.any,
+    renderStarted : PropTypes.any,
+    renderComplete : PropTypes.any,
+    pageLoaded : PropTypes.any,
+    localized : PropTypes.any,
+    dataGrouping : PropTypes.any,
+    dataGrouped : PropTypes.any,
+    groupVisibilityChanged : PropTypes.any,
+    groupClick : PropTypes.any,
+    groupDblClick : PropTypes.any,
+    groupContext : PropTypes.any,
+    groupTap : PropTypes.any,
+    groupDblTap : PropTypes.any,
+    groupTapHold : PropTypes.any,
+    movableRowsSendingStart : PropTypes.any,
+    movableRowsSent : PropTypes.any,
+    movableRowsSentFailed : PropTypes.any,
+    movableRowsSendingStop : PropTypes.any,
+    movableRowsReceivingStart : PropTypes.any,
+    movableRowsReceived : PropTypes.any,
+    movableRowsReceivedFailed : PropTypes.any,
+    movableRowsReceivingStop : PropTypes.any,
+    validationFailed : PropTypes.any,
+    clipboardCopied : PropTypes.any,
+    clipboardPasted : PropTypes.any,
+    clipboardPasteError : PropTypes.any,
+    downloadReady : PropTypes.any,
+    downloadComplete : PropTypes.any,
+    selectableCheck : PropTypes.any
+
 };

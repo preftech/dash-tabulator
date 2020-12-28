@@ -46,7 +46,7 @@ data = [
                 {"id":7, "name":"Brie Larson", "age":"30", "col":"blue", "rating":"1", "dob":"31/01/1999", "print" :"foo"},
               ]
 
-options = { "groupBy": "col", "selectable":"true"}
+options = { "groupBy": "col", "selectable":"true", "columnResized" : ns("columnResized")}
 downloadButtonType = {"css": "btn btn-primary", "text":"Export", "type":"xlsx"}
 clearFilterButtonType = {"css": "btn btn-outline-dark", "text":"Clear Filters"}
 initialHeaderFilter = [{"field":"col", "value":"blue"}]
