@@ -39,6 +39,7 @@ This readme is probably longer than the code, due to the work of those individua
 Installation can be done with pip in your dash project
 ```bash
 pip install dash_tabulator
+pip install dash_extensions
 ```
 
 ## Usage
