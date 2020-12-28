@@ -251,7 +251,7 @@ This a browser side javascript method attached to a header colum.
 
 * Create an assets directory
   * See https://dash.plotly.com/external-resources for customization options
-* Add a javascript file with a window.<CustomNameSpace> method
+* Add a javascript file with a window.<CustomNameSpace> method (below we call it myNamespace)
   * An example is provided in the assets/custom_tabulator.js file
   * Note the Namespace and the function printIcon 
 * Register that method in your python app 
@@ -263,7 +263,7 @@ Python code:
 ```python
 from dash_extensions.javascript import Namespace
 ...
-ns = Namespace("CustomNamespace", "tabulator")
+ns = Namespace("myNamespace", "tabulator")
 ...
 columns = [{"formatter": ns("printIcon")}, ...]
 ```
@@ -289,9 +289,15 @@ assets/custom_tabulator.js
 ```javascript
 window.myNamespace = Object.assign({}, window.myNamespace, {
     tabulator: {
-        columnResized : function (column) {
+        columnResized : function (column, table) {
+            // column is the tabulator column component
+            // table is the tabulator instance, can be used for table.setProps() to send data back to dash
             console.log("Column is resized");
             console.log(column)
+             
+            // send data back to dash, still under work, only updates when state changes
+            // be aware of table rendering and resetting back to original display
+            table.props.setProps({"columnResized": column._column.field}) 
         }
     }
 });

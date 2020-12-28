@@ -8,7 +8,8 @@ window.myNamespace = Object.assign({}, window.myNamespace, {
             console.log(column);
             console.log(column._column.field)
             
-            // send data back to dash, still under work, doesn't always refresh state
+            // send data back to dash, still under work, only updates when state changes
+            // be aware of table rendering and resetting back to original display
             //table.props.setProps({"columnResized": column._column.field})
         }
     }
