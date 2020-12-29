@@ -363,3 +363,4 @@ A full list of callbacks available exists http://tabulator.info/docs/4.8/callbac
 * Home Page https://github.com/preftech/dash-tabulator
 * Tabulator from @olifolkerd http://tabulator.info/
 * React-Tabulator from @ngduc https://github.com/ngduc/react-tabulator
+* Dash / Plotly from @plotly https://plotly.com/dash/
