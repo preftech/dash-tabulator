@@ -10,7 +10,7 @@ DashTabulator is an implementation of the React Tabulator from  https://github.c
 }
 
 \usage{
-dashTabulator(id=NULL, columns=NULL, data=NULL, options=NULL,
+dashTabulator(id=NULL, theme=NULL, columns=NULL, data=NULL, options=NULL,
 rowClicked=NULL, multiRowsClicked=NULL, cellEdited=NULL,
 dataChanged=NULL, downloadButtonType=NULL,
 clearFilterButtonType=NULL, initialHeaderFilter=NULL,
@@ -47,6 +47,8 @@ downloadComplete=NULL, selectableCheck=NULL)
 
 \arguments{
 \item{id}{Character. The ID used to identify this component in Dash callbacks.}
+
+\item{theme}{Character. theme}
 
 \item{columns}{Unnamed list. A label that will be printed when this component is rendered.}
 

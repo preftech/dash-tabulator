@@ -58,6 +58,17 @@
         "required": false,
         "description": "The ID used to identify this component in Dash callbacks."
       },
+      "theme": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "theme",
+        "defaultValue": {
+          "value": "null",
+          "computed": false
+        }
+      },
       "columns": {
         "type": {
           "name": "array"

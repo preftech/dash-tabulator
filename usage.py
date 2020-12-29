@@ -54,6 +54,7 @@ initialHeaderFilter = [{"field":"col", "value":"blue"}]
 app.layout = html.Div([
     dash_tabulator.DashTabulator(
         id='tabulator',
+        theme="tabulator",
         options=options,
         downloadButtonType=downloadButtonType,
         clearFilterButtonType=clearFilterButtonType,

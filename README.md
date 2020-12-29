@@ -1,14 +1,19 @@
 # dash_tabulator <!-- omit in toc -->
 
 
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Multiple Row Selection](#multiple-row-selection)
-- [Javascript](#javascript)
-- [Javascript Cell Formatting Example](#javascript-cell-formatting-example)
-- [Javascript column resizing capture](#javascript-column-resizing-capture)
-- [Homepage](#homepage)
+- [Dash Tabulator](#dash-tabulator)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Themes](#themes)
+- [Advanced Usage](#advanced-usage)
+  - [Multiple Row Selection](#multiple-row-selection)
+  - [Javascript](#javascript)
+  - [Javascript Cell Formatting Example](#javascript-cell-formatting-example)
+  - [Javascript column resizing capture](#javascript-column-resizing-capture)
+  - [Links](#links)
+
+# Dash Tabulator
 
 Dash tabulator is a Dash / Plotly component providing [Tabulator](http://tabulator.info/) capabilities.
 This is not a fully comprehensive implementation of Tabulator just the basics necessary to get the application working.
@@ -29,7 +34,7 @@ This readme is probably longer than the code, due to the work of those individua
 * Cell Edit Callbacks, capture the cell that was just changed, requires setting "editor":"input" etc.. on column header
 * Download button to export as [csv / xlsx / pdf](http://tabulator.info/docs/4.2/download) 
   * XLSX & PDF require 3 party js scripts, see above link for details 
-* Javascript formatters for cells
+* Javascript bindings  
   * Contributed by Emil Haldrup Eriksen https://github.com/emilhe
   *  See pull request https://github.com/preftech/dash-tabulator/pull/11
 
@@ -193,18 +198,53 @@ dataFiltered will return the header filter and the row data e.g.
 ```python
 {
     'filters': [{'field': 'col', 'type': 'like', 'value': 'yellow'}], 
-    'rows': [None, None, {'id': 5, 'name': 'Margret Marmajuke', 'age': '16', 'col': 'yellow', 'dob': '31/01/1999'}, {'id': 6, 'name': 'Fred Savage', 'age': '16', 'col': 'yellow', 'rating': '1', 'dob': '31/01/1999'}]}
+    'rows': [
+              None, 
+              None, 
+              {'id': 5, 'name': 'Margret Marmajuke', 'age': '16', 'col': 'yellow', 'dob': '31/01/1999'}, 
+              {'id': 6, 'name': 'Fred Savage', 'age': '16', 'col': 'yellow', 'rating': '1', 'dob': '31/01/1999'}
+              ]
+}
 ```
+
+## Themes 
+React-Tabulator comes with several themes that can be used in Dash-Tabulator
+Dash-Tabulator uses the default theme tabulator.min.css
+The theme can be set in the Dash-Tabulator constructor 
+e.g.
+```python
+app.layout = html.Div([
+    dash_tabulator.DashTabulator(
+        id='tabulator',
+        theme='tabulator_simple',  #optional
+        options=options,
+        downloadButtonType=downloadButtonType,
+        clearFilterButtonType=clearFilterButtonType,
+    ),
+    ....
+])
+```
+The following are the built in react-tabulator themes 
+- tabulator or default => react-tabulator/lib/css/tabulator.min.css
+- tabulator_modern => react-tabulator/lib/css/tabulator_modern.min.css
+- tabulator_midnight => react-tabulator/lib/css/tabulator_midnight.min.css
+- tabulator_simple => react-tabulator/lib/css/tabulator_simple.min.css
+- tabulator_site => react-tabulator/lib/css/tabulator_site.min.css
+- bootstrap/tabulator_bootstrap => react-tabulator/lib/css/bootstrap/tabulator_bootstrap.min.css
+- bootstrap/tabulator_bootstrap4 => react-tabulator/lib/css/bootstrap/tabulator_bootstrap4.min.css
+- bulma/tabulator_bulma => react-tabulator/lib/css/bulma/tabulator_bulma.min.css
+- materialize/tabulator_materialize => react-tabulator/lib/css/materialize/tabulator_materialize.min.css
+- semantic-ui/tabulator_semantic-ui => react-tabulator/lib/css/semantic-ui/tabulator_semantic-ui.min.css
+
+
+# Advanced Usage 
 
 ## Multiple Row Selection
 Tabulator supports multiple row selection
 To Enable the table option selectable must be set to the STRING true
 ```python
-options = { "groupBy": "col", "selectable":"true"}
+options = { "selectable":"true", ....}
 ``` 
-Beware this is not the python keyword True
-For other options around selectable such as max selectable rows see
-http://tabulator.info/docs/4.0/select
 
 Once selectable is set 
 ```python
@@ -226,14 +266,15 @@ e.g.
 ]
 ```
 
-Multi row selection can also be performed using a header column 
+Select all / deselect all can be accomplished with a header formatter called rowSelection.
+
 ```python
 columns = [
                 {"formatter":"rowSelection", "titleFormatter":"rowSelection", "hozAlign":"center", "headerSort":"false"},
                 { "title": "Name", "field": "name", "width": 150, "headerFilter":True, "editor":"input"},
 ```
+For more options check out http://tabulator.info/docs/4.8/select
 
-Multi row selection appears to create an issue with determining which cell was clicked as the entire row is highlighted, this may be a bug in Tabulator or React Tabulator.
 
 ## Javascript 
 Tabulator offers a significate amount of callbacks that allow for interactivity with tables to be captured
@@ -317,13 +358,8 @@ A full list of callbacks available exists http://tabulator.info/docs/4.8/callbac
 
 
 
-## Homepage 
+## Links 
 
-* https://github.com/preftech/dash-tabulator
-
-
-
-
-
-
-
+* Home Page https://github.com/preftech/dash-tabulator
+* Tabulator from @olifolkerd http://tabulator.info/
+* React-Tabulator from @ngduc https://github.com/ngduc/react-tabulator

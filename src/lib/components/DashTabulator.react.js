@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, { array } from 'prop-types';
 
 import 'react-tabulator/lib/styles.css'; // required styles
-import 'react-tabulator/lib/css/tabulator.min.css'; // theme
+//import 'react-tabulator/lib/css/tabulator.min.css'; // theme
 import { ReactTabulator } from 'react-tabulator'
 import {resolveProps, resolveProp} from 'dash-extensions'
 
@@ -16,8 +16,46 @@ import {resolveProps, resolveProp} from 'dash-extensions'
  */
 export default class DashTabulator extends Component {
     constructor(props) {
+
         super(props);
         this.ref = null;
+        
+        this.theme = props.theme;
+        switch(this.theme) {
+            
+            case null : // theme not set use default
+            case 'tabulator': // name of default theme
+            case 'default' : // default - expect the unexpected 
+                require('react-tabulator/lib/css/tabulator.min.css');
+                break
+            case 'tabulator_modern' : 
+                require('react-tabulator/lib/css/tabulator_modern.min.css');
+                break;
+            case 'tabulator_midnight':
+                require('react-tabulator/lib/css/tabulator_midnight.min.css');
+                break;
+            case 'tabulator_simple' :
+                require('react-tabulator/lib/css/tabulator_simple.min.css');
+                break;
+            case 'tabulator_site' :
+                require('react-tabulator/lib/css/tabulator_site.min.css');
+                break;
+            case 'bootstrap/tabulator_bootstrap' :
+                require('react-tabulator/lib/css/bootstrap/tabulator_bootstrap.min.css');
+                break;
+            case 'bootstrap/tabulator_bootstrap4' :
+                require('react-tabulator/lib/css/bootstrap/tabulator_bootstrap4.min.css');
+                break;   
+            case 'bulma/tabulator_bulma' :
+                require('react-tabulator/lib/css/bulma/tabulator_bulma.min.css');
+                break;
+            case 'materialize/tabulator_materialize' :
+                require('react-tabulator/lib/css/materialize/tabulator_materialize.min.css'); 
+                break;
+            case 'semantic-ui/tabulator_semantic-ui':
+                require('react-tabulator/lib/css/semantic-ui/tabulator_semantic-ui.min.css'); 
+                break; 
+        }
     }
     
     /*
@@ -154,7 +192,8 @@ export default class DashTabulator extends Component {
 
 DashTabulator.defaultProps = {
     columns : [],
-    data: []
+    data: [],
+    theme: null
 };
 
 DashTabulator.propTypes = {
@@ -162,6 +201,11 @@ DashTabulator.propTypes = {
      * The ID used to identify this component in Dash callbacks.
      */
     id: PropTypes.string,
+
+    /**
+     * theme
+     */
+    theme : PropTypes.string,
 
     /**
      * A label that will be printed when this component is rendered.
