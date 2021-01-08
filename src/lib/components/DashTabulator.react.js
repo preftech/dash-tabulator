@@ -69,7 +69,9 @@ export default class DashTabulator extends Component {
         //console.log('ref table: ', this.ref.table); // this is the Tabulator table instance
         //console.log('rowClick id: ${row.getData().id}', row, e);
         //console.log( this.ref.table.getSelectedData());
+        this.shouldRerender = false; 
         this.props.setProps({rowClicked: row._row.data})
+        this.shouldRerender = true;
     };
 
     rowSelected = (data, row) => {
