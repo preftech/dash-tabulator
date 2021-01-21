@@ -27,7 +27,11 @@ styles = {
 ns = Namespace("myNamespace", "tabulator")
 
 columns = [
-                {"formatter":"rowSelection", "titleFormatter":"rowSelection", "hozAlign":"center", "headerSort":"false"},
+                {"formatter":"rowSelection", "titleFormatter":"rowSelection", 
+                    "titleFormatterParams": {
+                                        "rowRange": "active" # only toggle the values of the active filtered rows
+                                }, 
+                    "hozAlign":"center", "headerSort":"false"},
                 { "title": "Name", "field": "name", "width": 150, "headerFilter":True, "editor":"input"},
                 { "title": "Age", "field": "age", "hozAlign": "left", "formatter": "progress" },
                 { "title": "Favourite Color", "field": "col", "headerFilter":True },
