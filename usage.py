@@ -30,10 +30,10 @@ columns = [
                 {"formatter":"rowSelection", "titleFormatter":"rowSelection", 
                     "titleFormatterParams": {
                                         "rowRange": "active" # only toggle the values of the active filtered rows
-                                }, 
+                                },
                     "hozAlign":"center", "headerSort":"false"},
                 { "title": "Name", "field": "name", "width": 150, "headerFilter":True, "editor":"input"},
-                { "title": "Age", "field": "age", "hozAlign": "left", "formatter": "progress" },
+                { "title": "Age", "field": "age", "hozAlign": "left", "formatter": "progress", "bottomCalc":ns("ageCalc")},
                 { "title": "Favourite Color", "field": "col", "headerFilter":True },
                 { "title": "Date Of Birth", "field": "dob", "hozAlign": "center" },
                 { "title": "Rating", "field": "rating", "hozAlign": "center", "formatter": "star" },

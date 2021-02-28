@@ -102,7 +102,16 @@ export default class DashTabulator extends Component {
         // Interpret column formatters as function handles.
         // TODO: resolve any columns method
         for(let i=0; i < columns.length; i++){
-            columns[i] = resolveProps(columns[i], ["formatter"])
+            let header = columns[i];
+            
+            for (let key in header){ 
+                let o = header[key];
+                console.log(key);
+                console.log(o);
+                if (o instanceof Object) { 
+                    header[key] = resolveProp(o, this);
+                }
+            }
         }
 
         // check all options for a global windows function in the assets folder

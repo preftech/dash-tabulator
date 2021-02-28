@@ -11,6 +11,22 @@ window.myNamespace = Object.assign({}, window.myNamespace, {
             // send data back to dash, still under work, only updates when state changes
             // be aware of table rendering and resetting back to original display
             //table.props.setProps({"columnResized": column._column.field})
+        },
+        // based on http://tabulator.info/docs/4.8/column-calcs#func-custom
+        ageCalc: function(values, data, calcParams){
+            //values - array of column values
+            //data - all table data
+            //calcParams - params passed from the column definition object
+        
+            var calc = 0;
+        
+            values.forEach(function(value){
+                if(value > 18){
+                calc ++;
+                }
+            });
+        
+            return calc;
         }
     }
 });
