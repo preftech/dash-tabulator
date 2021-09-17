@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes, { array } from 'prop-types';
 
 import 'react-tabulator/lib/styles.css'; // required styles
 //import 'react-tabulator/lib/css/tabulator.min.css'; // theme
 import { ReactTabulator } from 'react-tabulator'
-import {resolveProps, resolveProp} from 'dash-extensions'
+import { resolveProps, resolveProp } from 'dash-extensions'
 
 /**
  * DashTabulator is an implementation of the React Tabulator from 
@@ -19,64 +19,75 @@ export default class DashTabulator extends Component {
 
         super(props);
         this.ref = null;
-        
+
         this.theme = props.theme;
-        switch(this.theme) {
-            
-            case null : // theme not set use default
+        switch (this.theme) {
+
+            case null: // theme not set use default
             case 'tabulator': // name of default theme
-            case 'default' : // default - expect the unexpected 
+            case 'default': // default - expect the unexpected 
                 require('react-tabulator/lib/css/tabulator.min.css');
                 break
-            case 'tabulator_modern' : 
+            case 'tabulator_modern':
                 require('react-tabulator/lib/css/tabulator_modern.min.css');
                 break;
             case 'tabulator_midnight':
                 require('react-tabulator/lib/css/tabulator_midnight.min.css');
                 break;
-            case 'tabulator_simple' :
+            case 'tabulator_simple':
                 require('react-tabulator/lib/css/tabulator_simple.min.css');
                 break;
-            case 'tabulator_site' :
+            case 'tabulator_site':
                 require('react-tabulator/lib/css/tabulator_site.min.css');
                 break;
-            case 'bootstrap/tabulator_bootstrap' :
+            case 'bootstrap/tabulator_bootstrap':
                 require('react-tabulator/lib/css/bootstrap/tabulator_bootstrap.min.css');
                 break;
-            case 'bootstrap/tabulator_bootstrap4' :
+            case 'bootstrap/tabulator_bootstrap4':
                 require('react-tabulator/lib/css/bootstrap/tabulator_bootstrap4.min.css');
-                break;   
-            case 'bulma/tabulator_bulma' :
+                break;
+            case 'bulma/tabulator_bulma':
                 require('react-tabulator/lib/css/bulma/tabulator_bulma.min.css');
                 break;
-            case 'materialize/tabulator_materialize' :
-                require('react-tabulator/lib/css/materialize/tabulator_materialize.min.css'); 
+            case 'materialize/tabulator_materialize':
+                require('react-tabulator/lib/css/materialize/tabulator_materialize.min.css');
                 break;
             case 'semantic-ui/tabulator_semantic-ui':
-                require('react-tabulator/lib/css/semantic-ui/tabulator_semantic-ui.min.css'); 
-                break; 
+                require('react-tabulator/lib/css/semantic-ui/tabulator_semantic-ui.min.css');
+                break;
         }
     }
-    
+
     /*
      * setProps calls render() which can break DOM updates like changing a cell to an editor 
      *          or resetting a filter field as it's being typed, shouldRerender can be used to turn off render
      *          as setProps is being called
      */
-    shouldRerender = false; 
-    
+    shouldRerender = false;
+
     rowClick = (e, row) => {
         //console.log('ref table: ', this.ref.table); // this is the Tabulator table instance
         //console.log('rowClick id: ${row.getData().id}', row, e);
         //console.log( this.ref.table.getSelectedData());
-        this.shouldRerender = false; 
-        this.props.setProps({rowClicked: row._row.data})
+        this.shouldRerender = false;
+        this.props.setProps({ rowClicked: row._row.data })
         this.shouldRerender = true;
     };
 
+    cellClick = (e, cell) => {
+        console.log(cell)
+        this.shouldRerender = false;
+        var click = new Object()
+        click.column = cell.getField()
+        click.value = cell.getValue()
+        click.row = cell.getData()
+        this.props.setProps({ cellClicked: click })
+        this.shouldRerender = true;
+    }
+
     rowSelected = (data, row) => {
         this.shouldRerender = false;
-        this.props.setProps({multiRowsClicked: data }) 
+        this.props.setProps({ multiRowsClicked: data })
         this.shouldRerender = true;
     }
 
@@ -96,19 +107,19 @@ export default class DashTabulator extends Component {
     }
 
     render() {
-        const {id, data, setProps, columns, options, rowClicked, multiRowsClicked, cellEdited, dataChanged,
-            downloadButtonType, clearFilterButtonType, initialHeaderFilter, dataFiltering, dataFiltered} = this.props;
-        
+        const { id, data, setProps, columns, options, rowClicked, multiRowsClicked, cellClicked, cellEdited, dataChanged,
+            downloadButtonType, clearFilterButtonType, initialHeaderFilter, dataFiltering, dataFiltered } = this.props;
+
         // Interpret column formatters as function handles.
         // TODO: resolve any columns method
-        for(let i=0; i < columns.length; i++){
+        for (let i = 0; i < columns.length; i++) {
             let header = columns[i];
-            
-            for (let key in header){ 
+
+            for (let key in header) {
                 let o = header[key];
                 console.log(key);
                 console.log(o);
-                if (o instanceof Object) { 
+                if (o instanceof Object) {
                     header[key] = resolveProp(o, this);
                 }
             }
@@ -116,12 +127,13 @@ export default class DashTabulator extends Component {
 
         // check all options for a global windows function in the assets folder
         for (let key in options) {
-            let o = options[key] 
+            let o = options[key]
             if (o instanceof Object) {
-                options[key] = resolveProp(o, this)    
+                options[key] = resolveProp(o, this)
             }
-        } 
-        const options2 = {...options, 
+        }
+        const options2 = {
+            ...options,
             downloadDataFormatter: (data) => data,
             downloadReady: (fileContents, blob) => blob
         }
@@ -138,71 +150,72 @@ export default class DashTabulator extends Component {
         return (
             <div>
                 {downloadButton}{clearFilterButton}
-            <ReactTabulator
-                ref={ref => (this.ref = ref)}
-                data={data}
-                columns={columns}
-                tooltips={true}
-                layout={"fitData"}
-                options={options2}
-                rowClick={this.rowClick}
-                cellEdited={(cell) => {
-                    //console.log(cell)
-                    var edited =new Object() 
-                    edited.column = cell.getField()
-                    edited.initialValue = cell.getInitialValue()
-                    edited.oldValue = cell.getOldValue()
-                    edited.value = cell.getValue()
-                    edited.row = cell.getData()
-                    this.props.setProps({cellEdited: edited})
-                }}
-                rowSelectionChanged={this.rowSelected}
-                dataChanged={(newData) => {
-                    this.props.setProps({dataChanged: newData})
-                }}
-                dataFiltering={(filters) => {
-                    //this.props.setProps({dataFiltering: this.getHeaderFilters()})
-                    var filterHeaders = new Array()
-                    if (this.ref) {
-                        filterHeaders =this.ref.table.getHeaderFilters() 
-                    }
-                    this.shouldRerender = false;
-                    this.props.setProps({dataFiltering:filterHeaders})
-                    this.shouldRerender = true;
-                }}
-                dataFiltered={(filters, rows) => {
-                    let rowData = new Array(rows.length)
-                    rows.forEach(r => rowData.push(r.getData()))
-                    var filterHeaders = new Array()
-                    if (this.ref) {
-                        filterHeaders =this.ref.table.getHeaderFilters() 
-                        //console.log(this.ref.table.getHeaderFilters())
-                        
-                    }
-                    
-                    this.shouldRerender = false;
-                    this.props.setProps(
-                                        {
-                                            dataFiltered: {
-                                                            filters: filterHeaders,
-                                                            rows: rowData
-                                                        }
-                                        }
-                                        )
-                    this.shouldRerender = true;
-                    }
-                } // dataFiltered end
+                <ReactTabulator
+                    ref={ref => (this.ref = ref)}
+                    data={data}
+                    columns={columns}
+                    tooltips={true}
+                    layout={"fitData"}
+                    options={options2}
+                    rowClick={this.rowClick}
+                    cellClick={this.cellClick}
+                    cellEdited={(cell) => {
+                        //console.log(cell)
+                        var edited = new Object()
+                        edited.column = cell.getField()
+                        edited.initialValue = cell.getInitialValue()
+                        edited.oldValue = cell.getOldValue()
+                        edited.value = cell.getValue()
+                        edited.row = cell.getData()
+                        this.props.setProps({ cellEdited: edited })
+                    }}
+                    rowSelectionChanged={this.rowSelected}
+                    dataChanged={(newData) => {
+                        this.props.setProps({ dataChanged: newData })
+                    }}
+                    dataFiltering={(filters) => {
+                        //this.props.setProps({dataFiltering: this.getHeaderFilters()})
+                        var filterHeaders = new Array()
+                        if (this.ref) {
+                            filterHeaders = this.ref.table.getHeaderFilters()
+                        }
+                        this.shouldRerender = false;
+                        this.props.setProps({ dataFiltering: filterHeaders })
+                        this.shouldRerender = true;
+                    }}
+                    dataFiltered={(filters, rows) => {
+                        let rowData = new Array(rows.length)
+                        rows.forEach(r => rowData.push(r.getData()))
+                        var filterHeaders = new Array()
+                        if (this.ref) {
+                            filterHeaders = this.ref.table.getHeaderFilters()
+                            //console.log(this.ref.table.getHeaderFilters())
 
-                initialHeaderFilter={initialHeaderFilter}
+                        }
 
-            />
+                        this.shouldRerender = false;
+                        this.props.setProps(
+                            {
+                                dataFiltered: {
+                                    filters: filterHeaders,
+                                    rows: rowData
+                                }
+                            }
+                        )
+                        this.shouldRerender = true;
+                    }
+                    } // dataFiltered end
+
+                    initialHeaderFilter={initialHeaderFilter}
+
+                />
             </div>
         );
     }
 }
 
 DashTabulator.defaultProps = {
-    columns : [],
+    columns: [],
     data: [],
     theme: null
 };
@@ -216,7 +229,7 @@ DashTabulator.propTypes = {
     /**
      * theme
      */
-    theme : PropTypes.string,
+    theme: PropTypes.string,
 
     /**
      * A label that will be printed when this component is rendered.
@@ -240,7 +253,7 @@ DashTabulator.propTypes = {
 
     options: PropTypes.object,
 
-    
+
     /**
      * rowClick captures the row that was clicked on
      */
@@ -252,7 +265,12 @@ DashTabulator.propTypes = {
     multiRowsClicked: PropTypes.array,
 
     /**
-     * cellEdited captures the cell that was clicked on
+     * cellClick captures the cell that was clicked on
+     */
+    cellClicked: PropTypes.object,
+
+    /**
+     * cellEdited captures the cell that was edited
      */
     cellEdited: PropTypes.object,
 
@@ -260,8 +278,8 @@ DashTabulator.propTypes = {
      * dataChanged captures the cell that was clicked on
      */
     dataChanged: PropTypes.array,
-    
-    
+
+
     /**
      * downloadButtonType, takes a css style, text to display on button, type is file type to download
      * e.g.
@@ -280,13 +298,13 @@ DashTabulator.propTypes = {
      * initialHeaderFilter based on http://tabulator.info/docs/4.8/filter#header
      * can take array of filters 
      */
-    initialHeaderFilter: PropTypes.array, 
+    initialHeaderFilter: PropTypes.array,
 
     /**
      * dataFiltering based on http://tabulator.info/docs/4.8/callbacks#filter
      * The dataFiltering callback is triggered whenever a filter event occurs, before the filter happens.
      */
-    dataFiltering: PropTypes.array ,
+    dataFiltering: PropTypes.array,
 
     /**
      * dataFiltered based on http://tabulator.info/docs/4.8/callbacks#filter
@@ -299,76 +317,76 @@ DashTabulator.propTypes = {
      * standard props not used by dash-tabulator directly
      * can be used as part of custom javascript implementations
      */
-    rowClick : PropTypes.any,
-    tableBuilding : PropTypes.any,
-    tableBuilt : PropTypes.any,
-    rowDblClick : PropTypes.any,
-    rowContext : PropTypes.any,
-    rowTap : PropTypes.any,
-    rowDblTap : PropTypes.any,
-    rowTapHold : PropTypes.any,
-    rowAdded : PropTypes.any,
-    rowDeleted : PropTypes.any,
-    rowMoved : PropTypes.any,
-    rowUpdated : PropTypes.any,
-    rowSelectionChanged : PropTypes.any,
-    rowSelected : PropTypes.any,
-    rowDeselected : PropTypes.any,
-    rowResized : PropTypes.any,
-    cellClick : PropTypes.any,
-    cellDblClick : PropTypes.any,
-    cellContext : PropTypes.any,
-    cellTap : PropTypes.any,
-    cellDblTap : PropTypes.any,
-    cellTapHold : PropTypes.any,
-    cellEditing : PropTypes.any,
-    cellEditCancelled : PropTypes.any,
-    columnMoved : PropTypes.any,
-    columnResized : PropTypes.any,
-    columnTitleChanged : PropTypes.any,
-    columnVisibilityChanged : PropTypes.any,
-    headerClick : PropTypes.any,
-    headerDblClick : PropTypes.any,
-    headerContext : PropTypes.any,
-    headerTap : PropTypes.any,
-    headerDblTap : PropTypes.any,
-    headerTapHold : PropTypes.any,
-    htmlImporting : PropTypes.any,
-    htmlImported : PropTypes.any,
-    dataLoading : PropTypes.any,
-    dataLoaded : PropTypes.any,
-    ajaxRequesting : PropTypes.any,
-    ajaxResponse : PropTypes.any,
-    ajaxError : PropTypes.any,
-    dataSorting : PropTypes.any,
-    dataSorted : PropTypes.any,
-    renderStarted : PropTypes.any,
-    renderComplete : PropTypes.any,
-    pageLoaded : PropTypes.any,
-    localized : PropTypes.any,
-    dataGrouping : PropTypes.any,
-    dataGrouped : PropTypes.any,
-    groupVisibilityChanged : PropTypes.any,
-    groupClick : PropTypes.any,
-    groupDblClick : PropTypes.any,
-    groupContext : PropTypes.any,
-    groupTap : PropTypes.any,
-    groupDblTap : PropTypes.any,
-    groupTapHold : PropTypes.any,
-    movableRowsSendingStart : PropTypes.any,
-    movableRowsSent : PropTypes.any,
-    movableRowsSentFailed : PropTypes.any,
-    movableRowsSendingStop : PropTypes.any,
-    movableRowsReceivingStart : PropTypes.any,
-    movableRowsReceived : PropTypes.any,
-    movableRowsReceivedFailed : PropTypes.any,
-    movableRowsReceivingStop : PropTypes.any,
-    validationFailed : PropTypes.any,
-    clipboardCopied : PropTypes.any,
-    clipboardPasted : PropTypes.any,
-    clipboardPasteError : PropTypes.any,
-    downloadReady : PropTypes.any,
-    downloadComplete : PropTypes.any,
-    selectableCheck : PropTypes.any
+    rowClick: PropTypes.any,
+    tableBuilding: PropTypes.any,
+    tableBuilt: PropTypes.any,
+    rowDblClick: PropTypes.any,
+    rowContext: PropTypes.any,
+    rowTap: PropTypes.any,
+    rowDblTap: PropTypes.any,
+    rowTapHold: PropTypes.any,
+    rowAdded: PropTypes.any,
+    rowDeleted: PropTypes.any,
+    rowMoved: PropTypes.any,
+    rowUpdated: PropTypes.any,
+    rowSelectionChanged: PropTypes.any,
+    rowSelected: PropTypes.any,
+    rowDeselected: PropTypes.any,
+    rowResized: PropTypes.any,
+    //cellClick: PropTypes.any,
+    cellDblClick: PropTypes.any,
+    cellContext: PropTypes.any,
+    cellTap: PropTypes.any,
+    cellDblTap: PropTypes.any,
+    cellTapHold: PropTypes.any,
+    cellEditing: PropTypes.any,
+    cellEditCancelled: PropTypes.any,
+    columnMoved: PropTypes.any,
+    columnResized: PropTypes.any,
+    columnTitleChanged: PropTypes.any,
+    columnVisibilityChanged: PropTypes.any,
+    headerClick: PropTypes.any,
+    headerDblClick: PropTypes.any,
+    headerContext: PropTypes.any,
+    headerTap: PropTypes.any,
+    headerDblTap: PropTypes.any,
+    headerTapHold: PropTypes.any,
+    htmlImporting: PropTypes.any,
+    htmlImported: PropTypes.any,
+    dataLoading: PropTypes.any,
+    dataLoaded: PropTypes.any,
+    ajaxRequesting: PropTypes.any,
+    ajaxResponse: PropTypes.any,
+    ajaxError: PropTypes.any,
+    dataSorting: PropTypes.any,
+    dataSorted: PropTypes.any,
+    renderStarted: PropTypes.any,
+    renderComplete: PropTypes.any,
+    pageLoaded: PropTypes.any,
+    localized: PropTypes.any,
+    dataGrouping: PropTypes.any,
+    dataGrouped: PropTypes.any,
+    groupVisibilityChanged: PropTypes.any,
+    groupClick: PropTypes.any,
+    groupDblClick: PropTypes.any,
+    groupContext: PropTypes.any,
+    groupTap: PropTypes.any,
+    groupDblTap: PropTypes.any,
+    groupTapHold: PropTypes.any,
+    movableRowsSendingStart: PropTypes.any,
+    movableRowsSent: PropTypes.any,
+    movableRowsSentFailed: PropTypes.any,
+    movableRowsSendingStop: PropTypes.any,
+    movableRowsReceivingStart: PropTypes.any,
+    movableRowsReceived: PropTypes.any,
+    movableRowsReceivedFailed: PropTypes.any,
+    movableRowsReceivingStop: PropTypes.any,
+    validationFailed: PropTypes.any,
+    clipboardCopied: PropTypes.any,
+    clipboardPasted: PropTypes.any,
+    clipboardPasteError: PropTypes.any,
+    downloadReady: PropTypes.any,
+    downloadComplete: PropTypes.any,
+    selectableCheck: PropTypes.any
 
 };
