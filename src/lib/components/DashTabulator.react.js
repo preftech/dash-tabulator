@@ -75,9 +75,8 @@ export default class DashTabulator extends Component {
     };
 
     cellClick = (e, cell) => {
-        console.log(cell)
         this.shouldRerender = false;
-        var click = new Object()
+        let click = new Object()
         click.column = cell.getField()
         click.value = cell.getValue()
         click.row = cell.getData()
@@ -333,7 +332,6 @@ DashTabulator.propTypes = {
     rowSelected: PropTypes.any,
     rowDeselected: PropTypes.any,
     rowResized: PropTypes.any,
-    //cellClick: PropTypes.any,
     cellDblClick: PropTypes.any,
     cellContext: PropTypes.any,
     cellTap: PropTypes.any,
