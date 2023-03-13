@@ -139,6 +139,7 @@ export default class DashTabulator extends Component {
             <div>
                 {downloadButton}{clearFilterButton}
             <ReactTabulator
+                id={this.props.id}
                 ref={ref => (this.ref = ref)}
                 data={data}
                 columns={columns}
